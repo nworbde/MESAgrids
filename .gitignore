@@ -1,4 +1,5 @@
 run_test
 *.o
 *.mod
+*.png
 

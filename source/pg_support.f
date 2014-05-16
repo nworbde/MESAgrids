@@ -43,6 +43,7 @@ contains
         
         ! locate the viewport
         vl = wl + padl + gl
+        print *, vl, padl, gl
         vr = wr - padr - gr
         vt = wt - padt - gt
         vb = wb + padb + gb
