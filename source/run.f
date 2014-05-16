@@ -1,8 +1,11 @@
 program run_test
-    use, intrinsic:: iso_fortran_env
+    use, intrinsic :: iso_fortran_env
+    use :: pg_support
     integer :: id
     integer :: pgopen
     real :: wxl, wxr, wyt, wyb, padding(4), gutters(4)
+    real :: legend_width, legend_left_margin, legend_top_margin
+    real :: legend_lineskip, legend_line_length
     
     id = pgopen('/xwin')
     if (id <= 0) then
@@ -19,76 +22,53 @@ program run_test
     wyt = 1.0
     wyb = 0.5
     
-    ! padding in fractions of full screen height, width
-    padding(:) = 0.03
+    ! padding in fractions of patch screen height, width
+    padding(:) = 0.05
     
     ! size of gutters (left, right, top, bottom) in units of a character height 
     ! in normalized units
     gutters(:) = [4.0,0.0,4.0,4.0]
 
+    legend_width = 1.0/3.0
+    legend_left_margin = 1.0
+    legend_top_margin = 0.5
+    legend_lineskip = 1.2
+    legend_line_length = 2.0
+
     call pgpap(9.0,1.0)
     
-    call do_plot(wxl,wxr,wyt,wyb,padding,gutters)
+    ! upper right
+    call do_plot_with_legend(wxl,wxr,wyt,wyb,padding,gutters, &
+        &   legend_width,legend_left_margin, legend_top_margin, &
+        &   legend_lineskip, legend_line_length)
     
     wxl = 0.0
     wxr = 2./3.
     wyt = 0.5
     wyb = 0.0
 
-    call pgsch(0.6)
-    call do_plot(wxl,wxr,wyt,wyb,padding,gutters)
+    ! lower left
+    call do_plot_with_legend(wxl,wxr,wyt,wyb,padding,gutters, &
+        &   legend_width,legend_left_margin, legend_top_margin, &
+        &   legend_lineskip, legend_line_length)
 
+    ! upper left
     wxl = 0.0
     wxr = 1./3.
     wyt = 1.0
     wyb = 0.5
 
     call do_plot(wxl,wxr,wyt,wyb,padding,gutters)
+
+    ! lower right
+    wxl = 2./3.
+    wxr = 1.0
+    wyt = 0.5
+    wyb = 0.0
+
+    call do_plot(wxl,wxr,wyt,wyb,padding,gutters)
     
     call pgclos
     
-contains
-    subroutine do_plot(wxl,wxr,wyt,wyb,padding,gutters)
-        real, intent(in) :: wxl,wxr,wyt,wyb,padding(4),gutters(4)
-        integer, parameter :: np=100
-        integer :: i
-        real, dimension(np) :: xr, yr
-        real :: patch_width, patch_height
-        real :: padl, padr, padt, padb, gl, gr, gt, gb
-        real :: xch, ych
-        real :: vl, vr, vt, vb
-        
-        xr = [(0.1*i,i=1,np)]
-        yr = sin(xr)
-
-        ! set up plot
-        patch_width = wxr-wxl
-        patch_height = wyt-wyb
-        
-        padl = padding(1)
-        padr = padding(2)
-        padt = padding(3)
-        padb = padding(4)
-        
-        ! get character height in normalized units
-        call pgqcs(0,xch,ych)
-        gl = xch*gutters(1)
-        gr = xch*gutters(2)
-        gt = ych*gutters(3)
-        gb = ych*gutters(4)
-        
-        ! locate the viewport
-        vl = wxl + padl + gl
-        vr = wxr - padr - gr
-        vt = wyt - padt - gt
-        vb = wyb + padb + gb
-        
-        call pgsvp(vl,vr,vb,vt)
-        call pgswin(minval(xr),maxval(xr),minval(yr),maxval(yr))
-        call pgbox('BCNST',0.0,0,'BCNSTV',0.0,0)
-        call pglab('x','y','hello world')
-        call pgline(100,xr,yr)
-        
-    end subroutine do_plot
     
 end program run_test

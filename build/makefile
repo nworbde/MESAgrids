@@ -20,25 +20,24 @@ FCfree = -ffree-form $(FC_free_preprocess)
 FCopt = -O2
 FCdebug = -g
 
-VPATH = $(TOPDIR)/source
-INCLUDES = -I$(TOPDIR)/source
-
 COMPILE_BASIC_FLAGS = $(FCbasic) $(INCLUDES)
 COMPILE_BASIC = $(FC) $(COMPILE_BASIC_FLAGS)
-
 COMPILE_TO_TEST   = $(COMPILE_BASIC) $(FCwarn) $(FCimpno) $(FCchecks) $(FCopt) $(FCfree) $(FCdebug) -c
 
 COMPILE = $(COMPILE_TO_TEST)
-
 LOADER = $(FC)
+
+VPATH = $(TOPDIR)/source
+INCLUDES = -I$(TOPDIR)/source
+OBJS = pg_support.o run.o
 
 default: run_test
 
-run.o: run.f
+%.o: %.f
 	$(COMPILE) $<
 	
-run_test: run.o
-	$(LOADER) -o $@ run.o $(LOAD_PGPLOT)
+run_test: $(OBJS)
+	$(LOADER) -o $@ $(OBJS) $(LOAD_PGPLOT)
 
 clean:
 	rm -f *.o run_test
