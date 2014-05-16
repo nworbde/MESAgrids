@@ -29,10 +29,10 @@ contains
         patch_width = wr-wl
         patch_height = wt-wb
         
-        padl = padding(1)*patch_width
-        padr = padding(2)*patch_width
-        padt = padding(3)*patch_height
-        padb = padding(4)*patch_height
+        padl = padding(1)
+        padr = padding(2)
+        padt = padding(3)
+        padb = padding(4)
         
         ! get character height in normalized units
         call pgqcs(0,xch,ych)
@@ -109,10 +109,10 @@ contains
         patch_width = wr-wl
         patch_height = wt-wb
         
-        padl = padding(1)*patch_width
-        padr = padding(2)*patch_width
-        padt = padding(3)*patch_height
-        padb = padding(4)*patch_height
+        padl = padding(1)
+        padr = padding(2)
+        padt = padding(3)
+        padb = padding(4)
         
         ! get character height in normalized units
         call pgqcs(0,xch,ych)

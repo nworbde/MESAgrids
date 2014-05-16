@@ -23,7 +23,7 @@ program run_test
     wyb = 0.5
     
     ! padding in fractions of patch screen height, width
-    padding(:) = 0.05
+    padding(:) = 0.02
     
     ! size of gutters (left, right, top, bottom) in units of a character height 
     ! in normalized units
@@ -35,7 +35,8 @@ program run_test
     legend_lineskip = 1.2
     legend_line_length = 2.0
 
-    call pgpap(9.0,1.0)
+    call pgpap(9.0,2./3.)
+    call pgsch(0.75)
     
     ! upper right
     call do_plot_with_legend(wxl,wxr,wyt,wyb,padding,gutters, &
