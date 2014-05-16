@@ -95,10 +95,15 @@ contains
         real, parameter :: margin = 0.05
         real, dimension(2) :: xl, yl
         real :: xtxt, ytxt
+        integer :: ci, save_ci
+        character(len=16), dimension(nl) :: lgn_txt
         
         ! initialize the data
         xr = [(pi*real(i-1)/real(np-1),i=1,np)]
         forall(i=1:np,j=1:nl) yr(i,j) = sin(xr(i)*real(j))
+        do i = 1, nl
+            write(lgn_txt(i),'(a,i0)') 'freq. = ',i
+        end do
 
         ! set up plot
         patch_width = wr-wl
@@ -140,8 +145,13 @@ contains
         call set_boundaries(xr,yr(:,nl),margin)
         call pgbox('BCNST',0.0,0,'BCNSTV',0.0,0)
         call pglab('x','y','hello world')
+        
+        call pgqci(ci)
+        save_ci = ci
         do i = 1, nl
+            call pgsci(ci)
             call pgline(100,xr,yr(:,i))
+            ci = ci + 1
         end do
         
         ! make legend
@@ -150,10 +160,19 @@ contains
 
         xl = [ ll, ll+legend_line_length*xch ]
         yl = lt - (legend_top_margin+0.5)*ych
+        ci = save_ci
         do i = 1, nl
+            call pgsci(ci)
             call pgline(2,xl,yl)
+            xtxt = xl(2)+xch
+            ytxt = yl(2)-0.5*ych
+            call pgsci(save_ci)
+            call pgtext(xtxt,ytxt,trim(lgn_txt(i)))
+            ci = ci + 1
             yl = yl - legend_lineskip*ych
         end do
+        
+        call pgsci(save_ci)
 
     end subroutine do_plot_with_legend
     
