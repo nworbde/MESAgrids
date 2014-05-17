@@ -2,12 +2,19 @@ module pggrid_def
 
     integer, parameter :: grid_max_num_cols = 12
     integer, parameter :: grid_max_num_rows = 12
+    integer, parameter :: grid_max_plots = 9
     type pg_data
         ! set by user
         real :: min_fraction_plt
         
         integer :: grid_num_cols
         integer :: grid_num_rows
+        character(len=64), dimension(grid_max_plots) :: grid_panel_names
+        integer, dimension(grid_max_plots) :: grid_panel_col
+        integer, dimension(grid_max_plots) :: grid_panel_colspan
+        integer, dimension(grid_max_plots) :: grid_panel_row
+        integer, dimension(grid_max_plots) :: grid_panel_rowspan
+        
         real :: grid_col_offset_in_px
         real :: grid_row_offset_in_px
         real :: grid_pad_left
