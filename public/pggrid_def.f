@@ -1,8 +1,8 @@
 module pggrid_def
-
     integer, parameter :: grid_max_num_cols = 12
     integer, parameter :: grid_max_num_rows = 12
     integer, parameter :: grid_max_plots = 9
+    
     type pg_data
         ! set by user
         real :: min_fraction_plt
@@ -41,8 +41,8 @@ module pggrid_def
         real :: lgdplt_legend_line_length_in_em
         
         ! internal, private
-        real, dimension(grid_max_num_cols) :: grid_col_left, grid_col_right
-        real, dimension(grid_max_num_rows) :: grid_row_top, grid_tow_bottom
+        real, dimension(grid_max_plots) :: grid_panel_left, grid_panel_right
+        real, dimension(grid_max_plots) :: grid_panel_top, grid_panel_bottom
     end type pg_data
     
 
