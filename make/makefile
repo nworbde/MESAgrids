@@ -1,6 +1,6 @@
 include $(MESA_DIR)/utils/makefile_header
 
-LIB = libpgtest.a
+LIB = libpggrid.a
 LIB_OBJS = pg_plots.o
 
 COMPILE = $(COMPILE_TO_TEST) $(FCfree)

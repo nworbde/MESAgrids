@@ -1,6 +1,9 @@
 include $(MESA_DIR)/utils/makefile_header
 
-LOAD_LOCAL = -L$(LOCAL_LIB_DIR) -lpgtest
+LIB_NAME = pggrid
+LIB_FILENAME = lib$(LIB_NAME).a
+
+LOAD_LOCAL = -L$(LOCAL_LIB_DIR) -l$(LIB_NAME)
 LOAD_OTHER = $(LOAD_PGPLOT)
 
 TESTER = run_test
@@ -16,7 +19,7 @@ VPATH = $(TEST_SRC_DIR)
 
 default: install
 
-$(TESTER): $(TEST_OBJS) $(LOCAL_LIB_DIR)/libpgtest.a
+$(TESTER): $(TEST_OBJS) $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 	$(LOADER) -o $@ $(TEST_OBJS) $(LOAD_LOCAL) $(LOAD_OTHER)
 	
 install: $(TESTER)

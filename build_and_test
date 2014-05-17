@@ -1,0 +1,40 @@
+#!/bin/bash
+
+function check_okay {
+	if [ $? -ne 0 ]
+	then
+		echo
+		pwd
+		echo "FAILED"
+		echo
+		exit 1
+	fi
+}
+
+echo
+echo "================"
+echo "BUILDING PGGRID "
+echo "================"
+echo
+
+echo
+echo "Building libraries"
+echo "------------------"
+cd make; make
+check_okay
+
+echo
+echo "Testing"
+echo "-------"
+cd ../test/make; make
+check_okay
+cd ..
+./run_test  # |tee test_output
+check_okay
+# echo
+# echo "test program finished. compare test/test_output with test/sample output."
+# cmp --quiet test_output sample_output
+# check_okay
+# echo "test_output matches expected."
+echo
+cd ..
