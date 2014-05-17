@@ -1,5 +1,5 @@
 
-    min_fraction_plt = two_thirds
+    max_fraction_padding = one_third
         
     grid_num_cols = 1
     grid_num_rows = 1

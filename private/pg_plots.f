@@ -1,166 +1,193 @@
 module pg_plots
-
+    use pggrid_def
+    
 contains
-    subroutine do_plot(wl,wr,wt,wb,padding,gutters)
-        ! left, right coordinates of patch
-        real, intent(in) :: wl,wr
-        ! top, bottom coordinates of patch
-        real, intent(in) :: wt, wb
-        ! padding (l, r, t, b) expresses as a fraction of the patch width and 
-        ! height
-        real, dimension(4), intent(in) :: padding
-        ! gutters, in units of the character height, around the plot (l, r, t, 
-        ! b)
-        real, dimension(4), intent(in) :: gutters
+    subroutine do_grid(p,xleft,xright,ytop,ybottom)
+        use, intrinsic :: iso_fortran_env, only: error_unit
+        type(pg_data), pointer :: p
+        real, intent(in) :: xleft, xright, ytop, ybottom
+        real :: xzero, width_px, yzero, height_px
+        real :: col_offset, row_offset
+        real :: col_width, row_height
+        real :: plot_xleft, plot_xright, plot_ytop, plot_ybottom
+        integer :: i
+        
+        call pgqvsz(3,xzero,width_px,yzero,height_px)
+        col_offset = p% grid_col_offset_in_px/width_px
+        row_offset = p% grid_row_offset_in_px/height_px
+        
+        col_width = 0.0
+        row_height = 0.0
+        
+        ! check padding
+        call adjust_padding_and_set_size( xleft, xright,  &
+        &   p% grid_num_cols, col_offset, p% max_fraction_padding, col_width)
+        call adjust_padding_and_set_size( ybottom, ytop,  &
+        &   p% grid_num_rows, row_offset, p% max_fraction_padding, row_height)
+
+        ! layout grid
+        do i= 1, p% grid_num_plots
+            plot_xleft =  &
+            &   xleft + (col_width+col_offset)*(p% grid_plot_col(i)-1)
+            plot_xright = xleft + col_width +  &
+            &   (col_width+col_offset)*(p% grid_plot_colspan(i)-1)
+            plot_ytop =  &
+            &   ytop - (row_height+row_offset)*(p% grid_plot_row(i)-1)
+            plot_ybottom = ytop - row_height - &
+            &   (row_height+row_offset)*(p% grid_plot_rowspan(i)-1)
+            
+            select case(p% grid_plot_names(i))
+            case ('Legend_Plot')
+                call do_lgdplt(p, plot_xleft, plot_xright, &
+                &   plot_ytop, plot_ybottom)
+            case ('Simple_Plot')
+                call do_simplt(p, plot_xleft, plot_xright, &
+                &   plot_ytop, plot_ybottom)
+            case default
+                write(error_unit,*) 'did not recognize plot name'
+            end select
+        end do
+        
+    contains
+        subroutine adjust_padding_and_set_size(z1, z2,  &
+        &   ndiv, offset, max_frac, div_size)
+            real, intent(in) :: z1, z2
+            integer, intent(in) :: ndiv
+            real, intent(inout) :: offset
+            real, intent(in) :: max_frac
+            real, intent(out) :: div_size
+            real :: padding_ratio
+            
+            if (ndiv < 2) return
+            padding_ratio = (ndiv-1)*offset/(z2-z1)/max_frac
+            if (padding_ratio > 1.0) offset = offset / padding_ratio
+            div_size = (z2 - z1 - (ndiv-1)*offset)/real(ndiv)
+         end subroutine adjust_padding_and_set_size
+
+    end subroutine do_grid
+        
+    subroutine do_simplt(p,xleft,xright,ytop,ybottom)
+        type(pg_data), pointer :: p
+        real, intent(in) :: xleft, xright, ytop, ybottom
         integer, parameter :: np=100
         integer :: i
-        real, dimension(np) :: xr, yr
-        real :: patch_width, patch_height
-        real :: padl, padr, padt, padb, gl, gr, gt, gb
+        real, dimension(np) :: xs, ys
+        real :: padl, padr, padt, padb
         real :: xch, ych
         real :: vl, vr, vt, vb
         real, parameter :: margin = 0.05
         
         ! initialize the data
-        xr = [(0.1*i,i=1,np)]
-        yr = sin(xr)
-
-        ! set up plot
-        patch_width = wr-wl
-        patch_height = wt-wb
+        xs = [(0.1*i,i=1,np)]
+        ys = sin(xs)
         
-        padl = padding(1)
-        padr = padding(2)
-        padt = padding(3)
-        padb = padding(4)
+        ! get default( or current?) char. size in pixels, and then scale to 
+        ! target size
+        call pgqcs(3,xch,ych)
+        call pgsch(p% simplt_char_size_in_px/ych)
         
-        ! get character height in normalized units
+        ! get size in normalized units and set padding
         call pgqcs(0,xch,ych)
-        gl = xch*gutters(1)
-        gr = xch*gutters(2)
-        gt = ych*gutters(3)
-        gb = ych*gutters(4)
+        padl = p% simplt_pad_left_in_em*xch
+        padr = p% simplt_pad_right_in_em*xch
+        padt = p% simplt_pad_top_in_em*ych
+        padb = p% simplt_pad_bottom_in_em*ych
         
         ! locate the viewport
-        vl = wl + padl + gl
-        print *, vl, padl, gl
-        vr = wr - padr - gr
-        vt = wt - padt - gt
-        vb = wb + padb + gb
-        
+        vl = xleft + padl
+        vr = xright - padr
+        vt = ytop - padt
+        vb = ybottom + padb
         call pgsvp(vl,vr,vb,vt)
-        call set_boundaries(xr,yr,margin)
-        call pgbox('BCNST',0.0,0,'BCNSTV',0.0,0)
-        call pglab('x','y','hello world')
-        call pgline(100,xr,yr)
         
-    end subroutine do_plot    
+        ! make the plot
+        call set_boundaries(xs,ys,margin)
+        call pgbox('BCNST',0.0,0,'BCNSTV',0.0,0)
+        call pglab('x','y','simple plot')
+        call pgline(100,xs,ys)
+        
+    end subroutine do_simplt
 
-    subroutine do_plot_with_legend(wl,wr,wt,wb,padding,gutters, &
-        &   legend_width,legend_left_margin, legend_top_margin, &
-        &   legend_lineskip, legend_line_length)
-        ! left, right coordinates of patch
-        real, intent(in) :: wl,wr
-        ! top, bottom coordinates of patch
-        real, intent(in) :: wt, wb
-        ! padding (l, r, t, b) expresses as a fraction of the patch width and 
-        ! height
-        real, dimension(4), intent(in) :: padding
-        ! gutters, in units of the character height, around the plot (l, r, t, 
-        ! b)
-        real, dimension(4), intent(in) :: gutters
-        ! width of legend, in units of the total plot area (ie, after trimming 
-        ! away padding and gutters)
-        real, intent(in) :: legend_width
-        ! margin, in units of character height, between plot and legend
-        real, intent(in) :: legend_left_margin
-        ! distance from top to first line of text is legend_top_margin+<char. 
-        ! height>
-        real, intent(in) :: legend_top_margin
-        ! distance between baselines of text, in units of character height
-        real, intent(in) :: legend_lineskip
-        ! length of line, in units of character height
-        real, intent(in) :: legend_line_length
-        !
-        real :: patch_width, patch_height
-        real :: padl, padr, padt, padb, gl, gr, gt, gb
+    subroutine do_lgdplt(p,xleft,xright,ytop,ybottom)
+        type(pg_data), pointer :: p
+        real, intent(in) :: xleft, xright, ytop, ybottom
+        real :: padl, padr, padt, padb
         real :: xch, ych
         real :: vl, vr, vt, vb, viewport_width, viewport_height
         real :: ll, lr, lt, lb
         real :: pl, pr, pt, pb
         integer, parameter :: np = 100, nl = 4
         integer :: i, j
-        real, dimension(np) :: xr
-        real, dimension(np,nl) :: yr
+        real, dimension(np) :: xs
+        real, dimension(np,nl) :: ys
         real, parameter :: pi = 3.141592653590
         real, parameter :: margin = 0.05
         real, dimension(2) :: xl, yl
         real :: xtxt, ytxt
         integer :: ci, save_ci
-        character(len=16), dimension(nl) :: lgn_txt
+        character(len=16), dimension(nl) :: lgd_txt
         
         ! initialize the data
-        xr = [(pi*real(i-1)/real(np-1),i=1,np)]
-        forall(i=1:np,j=1:nl) yr(i,j) = sin(xr(i)*real(j))
+        xs = [(pi*real(i-1)/real(np-1),i=1,np)]
+        forall(i=1:np,j=1:nl) ys(i,j) = sin(xs(i)*real(j))
         do i = 1, nl
-            write(lgn_txt(i),'(a,i0)') 'freq. = ',i
+            write(lgd_txt(i),'(a,i0)') 'freq. = ',i
         end do
 
-        ! set up plot
-        patch_width = wr-wl
-        patch_height = wt-wb
+        ! get default( or current?) char. size in pixels, and then scale to 
+        ! target size
+        call pgqcs(3,xch,ych)
+        call pgsch(p% lgdplt_char_size_in_px/xch)
         
-        padl = padding(1)
-        padr = padding(2)
-        padt = padding(3)
-        padb = padding(4)
-        
-        ! get character height in normalized units
+        ! get size in normalized units and set padding
         call pgqcs(0,xch,ych)
-        gl = xch*gutters(1)
-        gr = xch*gutters(2)
-        gt = ych*gutters(3)
-        gb = ych*gutters(4)
+        padl = p% lgdplt_pad_left_in_em*xch
+        padr = p% lgdplt_pad_right_in_em*xch
+        padt = p% lgdplt_pad_top_in_em*ych
+        padb = p% lgdplt_pad_bottom_in_em*ych
         
-        ! locate the viewport area
-        vl = wl + padl + gl
-        vr = wr - padr - gr
-        vt = wt - padt - gt
-        vb = wb + padb + gb
+        ! locate the plot area
+        vl = xleft + padl
+        vr = xright - padr
+        vt = ytop - padt
+        vb = ybottom + padb
         
         viewport_width = vr-vl
         viewport_height = vt-vb
         
         ! set up legend, plot boundaries
         lr = vr
-        ll = vr - legend_width*viewport_width
+        ll = vr - p% lgdplt_legend_width*viewport_width
         lt = vt
         lb = vb
         
-        pr = ll - legend_left_margin*xch
+        pr = ll - p% lgdplt_legend_left_margin_in_em*xch
         pl = vl
         pt = vt
         pb = vb
         
+        ! set plot viewport and make plot
         call pgsvp(pl,pr,pb,pt)
-        call set_boundaries(xr,yr(:,nl),margin)
+        call set_boundaries(xs,ys(:,nl),margin)
         call pgbox('BCNST',0.0,0,'BCNSTV',0.0,0)
-        call pglab('x','y','hello world')
+        call pglab('x','y','plot with legend')
         
         call pgqci(ci)
         save_ci = ci
         do i = 1, nl
             call pgsci(ci)
-            call pgline(100,xr,yr(:,i))
+            call pgline(100,xs,ys(:,i))
             ci = ci + 1
         end do
         
         ! make legend
         call pgsvp(ll,lr,lb,lt)
+        ! match world coordinates to normalized locations of patch
         call pgswin(ll,lr,lb,lt)
+        call pgsch(p% lgdplt_legend_txt_scale*xch)
 
-        xl = [ ll, ll+legend_line_length*xch ]
-        yl = lt - (legend_top_margin+0.5)*ych
+        xl = [ ll, ll+p% lgdplt_legend_line_length_in_em*xch ]
+        yl = lt - (p% lgdplt_legend_top_margin_in_em+0.5)*ych
         ci = save_ci
         do i = 1, nl
             call pgsci(ci)
@@ -168,14 +195,14 @@ contains
             xtxt = xl(2)+xch
             ytxt = yl(2)-0.5*ych
             call pgsci(save_ci)
-            call pgtext(xtxt,ytxt,trim(lgn_txt(i)))
+            call pgtext(xtxt,ytxt,trim(lgd_txt(i)))
             ci = ci + 1
-            yl = yl - legend_lineskip*ych
+            yl = yl - p% lgdplt_legend_lineskip_in_em*ych
         end do
         
         call pgsci(save_ci)
 
-    end subroutine do_plot_with_legend
+    end subroutine do_lgdplt
     
     subroutine set_boundaries(xs,ys,margin)
         real, intent(in) :: xs(:),ys(:),margin

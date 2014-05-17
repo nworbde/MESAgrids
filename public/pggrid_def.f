@@ -5,15 +5,26 @@ module pggrid_def
     
     type pg_data
         ! set by user
-        real :: min_fraction_plt
+        logical :: win_flag
+        logical :: file_flag
+        character(len=256) :: file_dir
+        character(len=256) :: file_prefix
+        character(len=256) :: file_device
+        character(len=256) :: file_extension
+        real :: file_width
+        real :: win_width
+        real :: file_aspect_ratio
+        real :: win_aspect_ratio
+        real :: max_fraction_padding
         
         integer :: grid_num_cols
         integer :: grid_num_rows
-        character(len=64), dimension(grid_max_plots) :: grid_panel_names
-        integer, dimension(grid_max_plots) :: grid_panel_col
-        integer, dimension(grid_max_plots) :: grid_panel_colspan
-        integer, dimension(grid_max_plots) :: grid_panel_row
-        integer, dimension(grid_max_plots) :: grid_panel_rowspan
+        integer :: grid_num_plots
+        character(len=64), dimension(grid_max_plots) :: grid_plot_names
+        integer, dimension(grid_max_plots) :: grid_plot_col
+        integer, dimension(grid_max_plots) :: grid_plot_colspan
+        integer, dimension(grid_max_plots) :: grid_plot_row
+        integer, dimension(grid_max_plots) :: grid_plot_rowspan
         
         real :: grid_col_offset_in_px
         real :: grid_row_offset_in_px
@@ -41,8 +52,8 @@ module pggrid_def
         real :: lgdplt_legend_line_length_in_em
         
         ! internal, private
-        real, dimension(grid_max_plots) :: grid_panel_left, grid_panel_right
-        real, dimension(grid_max_plots) :: grid_panel_top, grid_panel_bottom
+        integer :: id_win
+        integer :: id_file
     end type pg_data
     
 

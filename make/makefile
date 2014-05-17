@@ -1,7 +1,7 @@
 include $(MESA_DIR)/utils/makefile_header
 
 LIB = libpggrid.a
-LIB_OBJS = pg_plots.o
+LIB_OBJS = pggrid_def.o pg_support.o pg_plots.o 
 
 COMPILE = $(COMPILE_TO_TEST) $(FCfree)
 VPATH = $(MOD_PUBLIC_DIR):$(MOD_PRIVATE_DIR)
