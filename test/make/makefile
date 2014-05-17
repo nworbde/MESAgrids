@@ -1,43 +1,26 @@
-TOPDIR = ..
+include $(MESA_DIR)/utils/makefile_header
 
-FC = gfortran
-LOAD_PGPLOT = `mesasdk_pgplot_link`
+LOAD_LOCAL = -L$(LOCAL_LIB_DIR) -lpgtest
+LOAD_OTHER = $(LOAD_PGPLOT)
 
-FCbasic = -fno-range-check -fmax-errors=100 $(SPECIAL_FC_FLAGS) -fprotect-parens -fno-sign-zero
-# -Warray-temporaries
- 
-FCimpno = -fimplicit-none  
-FCchecks = -fbounds-check -Wuninitialized -Warray-bounds
-FCwarn = -Wunused-value -Werror -W -Wno-compare-reals -Wno-unused-parameter
-# -Wno-unused-parameter
- 
-# note: -Werror causes warnings to be treated as errors
-FC_fixed_preprocess = -x f77-cpp-input
-FC_free_preprocess = -x f95-cpp-input
-FCfixed = -ffixed-form -ffixed-line-length-132 $(FC_fixed_preprocess)
-FCfixed72 = -ffixed-form $(FC_fixed_preprocess)
-FCfree = -ffree-form $(FC_free_preprocess)
-FCopt = -O2
-FCdebug = -g
+TESTER = run_test
+TEST_OBJS = run_test.o
 
-COMPILE_BASIC_FLAGS = $(FCbasic) $(INCLUDES)
-COMPILE_BASIC = $(FC) $(COMPILE_BASIC_FLAGS)
-COMPILE_TO_TEST   = $(COMPILE_BASIC) $(FCwarn) $(FCimpno) $(FCchecks) $(FCopt) $(FCfree) $(FCdebug) -c
+COMPILE = $(TEST_COMPILE) $(FCfree)
 
-COMPILE = $(COMPILE_TO_TEST)
-LOADER = $(FC)
+VPATH = $(TEST_SRC_DIR)
 
-VPATH = $(TOPDIR)/source
-INCLUDES = -I$(TOPDIR)/source
-OBJS = pg_support.o run.o
-
-default: run_test
 
 %.o: %.f
 	$(COMPILE) $<
+
+default: install
+
+$(TESTER): $(TEST_OBJS) $(LOCAL_LIB_DIR)/libpgtest.a
+	$(LOADER) -o $@ $(TEST_OBJS) $(LOAD_LOCAL) $(LOAD_OTHER)
 	
-run_test: $(OBJS)
-	$(LOADER) -o $@ $(OBJS) $(LOAD_PGPLOT)
+install: $(TESTER)
+	cp $? $(TEST_DIR)
 
 clean:
-	rm -f *.o run_test
+	-@rm -f *.o *.mod $(TESTER)

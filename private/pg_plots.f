@@ -1,4 +1,4 @@
-module pg_support
+module pg_plots
 
 contains
     subroutine do_plot(wl,wr,wt,wb,padding,gutters)
@@ -190,4 +190,4 @@ contains
         call pgswin(xmin-margin*width,xmax+margin*width, &
         &   ymin-margin*height,ymax+margin*height)
     end subroutine set_boundaries
-end module pg_support
+end module pg_plots

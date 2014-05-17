@@ -1,6 +1,6 @@
 program run_test
     use, intrinsic :: iso_fortran_env
-    use :: pg_support
+    use :: pg_plots
     integer :: id
     integer :: pgopen
     real :: wxl, wxr, wyt, wyb, padding(4), gutters(4)
@@ -10,8 +10,8 @@ program run_test
     real :: xch, ych
     real :: x1, x2, y1, y2
     
-!     id = pgopen('/xwin')
-    id = pgopen('sandbox_plt.png/png')
+     id = pgopen('/xwin')
+!     id = pgopen('sandbox_plt.png/png')
     if (id <= 0) then
         write(error_unit,*) 'please check that X Window System is running'
         write(error_unit,*) 'and that you have set the environment variables'
@@ -81,6 +81,5 @@ program run_test
     call do_plot(wxl,wxr,wyt,wyb,padding,gutters)
     
     call pgclos
-    
     
 end program run_test
