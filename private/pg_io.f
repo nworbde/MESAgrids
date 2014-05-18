@@ -69,9 +69,16 @@ module pg_io
                 return
             end if
             read(iounit,nml=pggrid,iostat=ierr)
+            if (failure('reading from '//trim(filename))) then
+                open(unit=iounit,file=trim(filename), action='read',  &
+                &   delim='quote',status='old',iostat=ierr)
+                read(iounit,nml=pggrid)
+                close(iounit)
+                call free_iounit(iounit)
+                return
+            end if
             close(iounit)
             call free_iounit(iounit)
-            if (failure('reading from '//trim(filename))) return
             call store_pggrid_controls(p)
             
         contains

@@ -4,7 +4,7 @@ LIB_NAME = pggrid
 LIB_FILENAME = lib$(LIB_NAME).a
 
 LOAD_LOCAL = -L$(LOCAL_LIB_DIR) -l$(LIB_NAME)
-LOAD_OTHER = $(LOAD_PGPLOT)
+LOAD_OTHER = $(LOAD_PGPLOT) -L$(MESA_LIB_DIR) -lconst -lutils
 
 TESTER = run_test
 TEST_OBJS = run_test.o
@@ -20,7 +20,7 @@ VPATH = $(TEST_SRC_DIR)
 default: install
 
 $(TESTER): $(TEST_OBJS) $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
-	$(LOADER) -o $@ $(TEST_OBJS) $(LOAD_LOCAL) $(LOAD_OTHER)
+	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ $(TEST_OBJS) $(LOAD_LOCAL) $(LOAD_OTHER)
 	
 install: $(TESTER)
 	cp $? $(TEST_DIR)

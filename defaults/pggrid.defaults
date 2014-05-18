@@ -18,8 +18,8 @@
     grid_plot_row(:) = 0
     grid_plot_rowspan(:) = 0
     
-    grid_col_offset_in_px = 15.0
-    grid_row_offset_in_px = 15.0
+    grid_col_offset_in_px = 20.0
+    grid_row_offset_in_px = 20.0
     grid_pad_left = 0.02
     grid_pad_right = 0.02
     grid_pad_top = 0.02

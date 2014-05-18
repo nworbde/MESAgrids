@@ -29,7 +29,7 @@ echo "-------"
 cd ../test/make; make
 check_okay
 cd ..
-./run_test  # |tee test_output
+./run_test test.inlist # |tee test_output
 check_okay
 # echo
 # echo "test program finished. compare test/test_output with test/sample output."

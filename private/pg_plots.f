@@ -16,26 +16,25 @@ contains
         col_offset = p% grid_col_offset_in_px/width_px
         row_offset = p% grid_row_offset_in_px/height_px
         
+        ! adjust padding if necessary
         col_width = 0.0
-        row_height = 0.0
-        
-        ! check padding
+        row_height = 0.0        
         call adjust_padding_and_set_size( xleft, xright,  &
         &   p% grid_num_cols, col_offset, p% max_fraction_padding, col_width)
         call adjust_padding_and_set_size( ybottom, ytop,  &
         &   p% grid_num_rows, row_offset, p% max_fraction_padding, row_height)
 
-        ! layout grid
+        ! layout grid and make subplots
         do i= 1, p% grid_num_plots
             plot_xleft =  &
             &   xleft + (col_width+col_offset)*(p% grid_plot_col(i)-1)
-            plot_xright = xleft + col_width +  &
+            plot_xright = plot_xleft + col_width +  &
             &   (col_width+col_offset)*(p% grid_plot_colspan(i)-1)
             plot_ytop =  &
             &   ytop - (row_height+row_offset)*(p% grid_plot_row(i)-1)
-            plot_ybottom = ytop - row_height - &
+            plot_ybottom = plot_ytop - row_height - &
             &   (row_height+row_offset)*(p% grid_plot_rowspan(i)-1)
-            
+                        
             select case(p% grid_plot_names(i))
             case ('Legend_Plot')
                 call do_lgdplt(p, plot_xleft, plot_xright, &
@@ -73,7 +72,7 @@ contains
         integer :: i
         real, dimension(np) :: xs, ys
         real :: padl, padr, padt, padb
-        real :: xch, ych
+        real :: xch, ych, em_x, em_y
         real :: vl, vr, vt, vb
         real, parameter :: margin = 0.05
         
@@ -81,17 +80,18 @@ contains
         xs = [(0.1*i,i=1,np)]
         ys = sin(xs)
         
-        ! get default( or current?) char. size in pixels, and then scale to 
+        ! get default char. size in pixels, and then scale to 
         ! target size
+        call pgsch(1.0)
         call pgqcs(3,xch,ych)
         call pgsch(p% simplt_char_size_in_px/ych)
         
         ! get size in normalized units and set padding
-        call pgqcs(0,xch,ych)
-        padl = p% simplt_pad_left_in_em*xch
-        padr = p% simplt_pad_right_in_em*xch
-        padt = p% simplt_pad_top_in_em*ych
-        padb = p% simplt_pad_bottom_in_em*ych
+        call pgqcs(0,em_x,em_y)
+        padl = p% simplt_pad_left_in_em*em_x
+        padr = p% simplt_pad_right_in_em*em_x
+        padt = p% simplt_pad_top_in_em*em_y
+        padb = p% simplt_pad_bottom_in_em*em_y
         
         ! locate the viewport
         vl = xleft + padl
@@ -112,7 +112,7 @@ contains
         type(pg_data), pointer :: p
         real, intent(in) :: xleft, xright, ytop, ybottom
         real :: padl, padr, padt, padb
-        real :: xch, ych
+        real :: xch, ych, em_x, em_y, text_scale
         real :: vl, vr, vt, vb, viewport_width, viewport_height
         real :: ll, lr, lt, lb
         real :: pl, pr, pt, pb
@@ -136,15 +136,16 @@ contains
 
         ! get default( or current?) char. size in pixels, and then scale to 
         ! target size
+        call pgsch(1.0)
         call pgqcs(3,xch,ych)
         call pgsch(p% lgdplt_char_size_in_px/xch)
         
         ! get size in normalized units and set padding
-        call pgqcs(0,xch,ych)
-        padl = p% lgdplt_pad_left_in_em*xch
-        padr = p% lgdplt_pad_right_in_em*xch
-        padt = p% lgdplt_pad_top_in_em*ych
-        padb = p% lgdplt_pad_bottom_in_em*ych
+        call pgqcs(0,em_x,em_y)
+        padl = p% lgdplt_pad_left_in_em*em_x
+        padr = p% lgdplt_pad_right_in_em*em_x
+        padt = p% lgdplt_pad_top_in_em*em_y
+        padb = p% lgdplt_pad_bottom_in_em*em_y
         
         ! locate the plot area
         vl = xleft + padl
@@ -161,7 +162,7 @@ contains
         lt = vt
         lb = vb
         
-        pr = ll - p% lgdplt_legend_left_margin_in_em*xch
+        pr = ll - p% lgdplt_legend_left_margin_in_em*em_x
         pl = vl
         pt = vt
         pb = vb
@@ -184,24 +185,26 @@ contains
         call pgsvp(ll,lr,lb,lt)
         ! match world coordinates to normalized locations of patch
         call pgswin(ll,lr,lb,lt)
-        call pgsch(p% lgdplt_legend_txt_scale*xch)
+        ! apply legend text scaling
+        call pgqch(text_scale)
+        call pgsch(p% lgdplt_legend_txt_scale*text_scale)
+        call pgqcs(0,em_x,em_y)
 
-        xl = [ ll, ll+p% lgdplt_legend_line_length_in_em*xch ]
-        yl = lt - (p% lgdplt_legend_top_margin_in_em+0.5)*ych
+        xl = [ ll, ll+p% lgdplt_legend_line_length_in_em*em_x ]
+        yl = lt - (p% lgdplt_legend_top_margin_in_em+0.5)*em_y
         ci = save_ci
         do i = 1, nl
             call pgsci(ci)
             call pgline(2,xl,yl)
-            xtxt = xl(2)+xch
-            ytxt = yl(2)-0.5*ych
+            xtxt = xl(2)+em_x
+            ytxt = yl(2)-0.5*em_y
             call pgsci(save_ci)
             call pgtext(xtxt,ytxt,trim(lgd_txt(i)))
             ci = ci + 1
-            yl = yl - p% lgdplt_legend_lineskip_in_em*ych
+            yl = yl - p% lgdplt_legend_lineskip_in_em*em_y
         end do
         
         call pgsci(save_ci)
-
     end subroutine do_lgdplt
     
     subroutine set_boundaries(xs,ys,margin)

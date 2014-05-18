@@ -16,6 +16,7 @@ contains
     subroutine make_pggrid_plot(ierr)
         use, intrinsic :: iso_fortran_env, only: error_unit
         use pg_support
+        use pg_plots
         integer, intent(out) :: ierr
         type(pg_data), pointer :: p
         real :: xleft, xright, ytop, ybottom
