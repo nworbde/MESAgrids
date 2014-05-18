@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+for inlist in inlist*; do
+     echo "running $inlist"
+     ./run_test $inlist
+done
