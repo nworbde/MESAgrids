@@ -16,8 +16,7 @@ contains
         character(len=256) :: name
         
         ierr = 0
-        if (p% win_flag) call open_device(p,.FALSE.,'/xwin',p% id_win,ierr)
-        if (failed('/xwin')) return
+        
         if (p% file_flag) then
             call create_file_name(p% file_dir, p% file_prefix,  &
             &   p% file_extension, name)
@@ -25,6 +24,9 @@ contains
             name = trim(name) // '/' // trim(p% file_device)
             call open_device(p,.TRUE.,name,p% id_file, ierr)
             if (failed(name)) return
+        else
+            call open_device(p,.FALSE.,'/xwin',p% id_win,ierr)
+            if (failed('/xwin')) return
         end if
         
         have_initialized_pg = .TRUE.

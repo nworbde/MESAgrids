@@ -1,7 +1,8 @@
-    logical :: win_flag
     logical :: file_flag
     character(len=256) :: file_dir
     character(len=256) :: file_prefix
+    character(len=256) :: file_device
+    character(len=256) :: file_extension
     real :: file_width
     real :: win_width
     real :: file_aspect_ratio
@@ -45,5 +46,3 @@
     ! internal, private
     integer :: id_win
     integer :: id_file
-    character(len=256) :: file_device
-    character(len=256) :: file_extension

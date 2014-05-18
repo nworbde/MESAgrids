@@ -5,10 +5,11 @@ module pg_io
     include 'pggrid_controls.f'
         
     namelist /pggrid/ &
-        win_flag, &
         file_flag, &
         file_dir, &
         file_prefix, &
+        file_device, &
+        file_extension, &
         file_width, &
         win_width, &
         file_aspect_ratio, &
@@ -98,10 +99,11 @@ module pg_io
         subroutine store_pggrid_controls(p)
             type(pg_data), pointer :: p
             
-            p% win_flag = win_flag
             p% file_flag = file_flag
             p% file_dir = file_dir
             p% file_prefix = file_prefix
+            p% file_device = file_device
+            p% file_extension = file_extension
             p% file_width = file_width
             p% win_width = win_width
             p% file_aspect_ratio = file_aspect_ratio

@@ -24,7 +24,9 @@ contains
         ierr = 0
         call get_pg_pointer(p)
         call pg_clear(p)
+        
         call do_open(p, ierr)
+        if (ierr /= 0) return
         
         xleft = p% grid_pad_left
         xright = 1.0-p% grid_pad_right
