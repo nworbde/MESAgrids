@@ -36,7 +36,8 @@ contains
            
            failed = (ierr /= 0)
            if (failed) then
-              write(*, *) trim(str) // ' ierr', ierr
+              write(*, *) 'failure opening device '//trim(str) // '. ierr = ', &
+              & ierr
            end if
         end function failed
         
