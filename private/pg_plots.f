@@ -42,6 +42,11 @@ contains
             case ('Simple_Plot')
                 call do_simplt(p, plot_xleft, plot_xright, &
                 &   plot_ytop, plot_ybottom)
+            case ('Box')
+                call do_box(p,plot_xleft,plot_xright,plot_ytop,plot_ybottom)
+            case ('Box_with_Legend')
+                call do_box_with_legend(p, &
+                &   plot_xleft,plot_xright,plot_ytop,plot_ybottom)
             case default
                 write(error_unit,*) 'did not recognize plot name'
             end select
@@ -61,10 +66,10 @@ contains
             padding_ratio = (ndiv-1)*offset/(z2-z1)/max_frac
             if (padding_ratio > 1.0) offset = offset / padding_ratio
             div_size = (z2 - z1 - (ndiv-1)*offset)/real(ndiv)
-         end subroutine adjust_padding_and_set_size
+        end subroutine adjust_padding_and_set_size
 
     end subroutine do_grid
-        
+    
     subroutine do_simplt(p,xleft,xright,ytop,ybottom)
         type(pg_data), pointer :: p
         real, intent(in) :: xleft, xright, ytop, ybottom
@@ -107,6 +112,40 @@ contains
         call pgline(100,xs,ys)
         
     end subroutine do_simplt
+
+    subroutine do_box(p,xleft,xright,ytop,ybottom)
+        type(pg_data), pointer :: p
+        real, intent(in) :: xleft, xright, ytop, ybottom
+        integer :: i
+        real :: padl, padr, padt, padb
+        real :: xch, ych, em_x, em_y
+        real :: vl, vr, vt, vb
+        
+        ! get default char. size in pixels, and then scale to 
+        ! target size
+        call pgsch(1.0)
+        call pgqcs(3,xch,ych)
+        call pgsch(p% simplt_char_size_in_px/ych)
+        
+        ! get size in normalized units and set padding
+        call pgqcs(0,em_x,em_y)
+        padl = p% simplt_pad_left_in_em*em_x
+        padr = p% simplt_pad_right_in_em*em_x
+        padt = p% simplt_pad_top_in_em*em_y
+        padb = p% simplt_pad_bottom_in_em*em_y
+        
+        ! locate the viewport
+        vl = xleft + padl
+        vr = xright - padr
+        vt = ytop - padt
+        vb = ybottom + padb
+        call pgsvp(vl,vr,vb,vt)
+        
+        ! make the plot
+        call pgswin(0.0,1.0,0.0,1.0)
+        call pgbox('BC',0.0,0,'BC',0.0,0)
+        
+    end subroutine do_box
 
     subroutine do_lgdplt(p,xleft,xright,ytop,ybottom)
         type(pg_data), pointer :: p
@@ -207,6 +246,68 @@ contains
         call pgsci(save_ci)
     end subroutine do_lgdplt
     
+    subroutine do_box_with_legend(p,xleft,xright,ytop,ybottom)
+        type(pg_data), pointer :: p
+        real, intent(in) :: xleft, xright, ytop, ybottom
+        real :: padl, padr, padt, padb
+        real :: xch, ych, em_x, em_y, text_scale
+        real :: vl, vr, vt, vb, viewport_width, viewport_height
+        real :: ll, lr, lt, lb
+        real :: pl, pr, pt, pb
+        integer :: ci, save_ci
+
+        ! get default( or current?) char. size in pixels, and then scale to 
+        ! target size
+        call pgsch(1.0)
+        call pgqcs(3,xch,ych)
+        call pgsch(p% lgdplt_char_size_in_px/xch)
+        
+        ! get size in normalized units and set padding
+        call pgqcs(0,em_x,em_y)
+        padl = p% lgdplt_pad_left_in_em*em_x
+        padr = p% lgdplt_pad_right_in_em*em_x
+        padt = p% lgdplt_pad_top_in_em*em_y
+        padb = p% lgdplt_pad_bottom_in_em*em_y
+        
+        ! locate the plot area
+        vl = xleft + padl
+        vr = xright - padr
+        vt = ytop - padt
+        vb = ybottom + padb
+        
+        viewport_width = vr-vl
+        viewport_height = vt-vb
+        
+        ! set up legend, plot boundaries
+        lr = vr
+        ll = vr - p% lgdplt_legend_width*viewport_width
+        lt = vt
+        lb = vb
+        
+        pr = ll - p% lgdplt_legend_left_margin_in_em*em_x
+        pl = vl
+        pt = vt
+        pb = vb
+        
+        ! set plot viewport and make plot
+        call pgsvp(pl,pr,pb,pt)
+        call pgswin(0.0,1.0,0.0,1.0)
+        call pgbox('BC',0.0,0,'BC',0.0,0)
+        
+        ! make legend
+        call pgsvp(ll,lr,lb,lt)
+        ! match world coordinates to normalized locations of patch
+        call pgswin(ll,lr,lb,lt)
+        
+        call pgqci(ci)
+        save_ci = ci
+        ci = ci+1
+        call pgsci(ci)
+        call pgbox('BC',0.0,0,'BC',0.0,0)
+        call pgsci(save_ci)
+        
+    end subroutine do_box_with_legend
+   
     subroutine set_boundaries(xs,ys,margin)
         real, intent(in) :: xs(:),ys(:),margin
         real :: xmin, xmax, ymin, ymax, width, height
