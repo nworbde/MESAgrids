@@ -10,7 +10,7 @@ Features
 
 *   Padding around the plots is specified in units of the character size ("em"). This takes some of the guesswork out of how much space to leave around plots.
 
-*   The legend line width is also given in terms of character size.  There are options to control the spacing between lines, as well as the top and left margin (given in units of em).
+*   The legend line length is also given in terms of character size.  There are options to control the spacing between lines, as well as the top and left margin (given in units of em).
 
 *   The grid allows for offsets between columns and rows.  These are fixed (given in units of px for now), and therefore do not change with the size of the viewing area.
 
