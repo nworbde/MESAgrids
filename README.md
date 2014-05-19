@@ -6,7 +6,7 @@ development interface for grid layout with the MESA stellar evolution code
 Features
 --------
 
-*   The character size is specified independtly of the viewing area size. Thus, if you resize the plot (going from desktop to laptop, e.g.) the text will remain at the same size.
+*   The character size is specified independently of the viewing area size. Thus, if you resize the plot (going from desktop to laptop, e.g.) the text will remain at the same size.
 
 *   Padding around the plots is specified in units of the character size ("em"). This takes some of the guesswork out of how much space to leave around plots.
 
