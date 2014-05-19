@@ -1,3 +1,7 @@
+# Grid plots with PGPLOT
+
+## Layout
+
 Let's start with a simple grid.  We'll make it 3 columns by 2 rows.  The file width we'll set to 12 (which is about 1152 pixels on my MacBook Pro), and we'll set the aspect ratio (height/width) to 2/3, so that the cells of our grid will be square.
 
     file_width = 12.0
@@ -78,12 +82,63 @@ Note that this spacing is fixed even as we reduce the plot size:
 
 ![as above, but reduced in scale](grid3.png "scaled by 0.75")
 
-Let's go back to our original size and make the upper right and lower left plots have room for a legend that takes up 0.15 of the plot width:
+Let's go back to our original size and make the upper right and lower left plots have room for a legend that takes up 0.18 of the plot width:
 
     grid_plot_names(2) = 'Box_with_Legend'
     grid_plot_names(3) = 'Box_with_Legend'
-    lgdplt_legend_width = 0.15
+    lgdplt_legend_width = 0.18
     lgdplt_legend_left_margin_in_em = 1.0
 
 We also specifed a gap of 1.0 em between the right edge of the plot and the legend.
+
+## Adding plots
+
+Now we are ready to add real plots. We have two: 'Simple_Plot', which just draws a sine wave, and 'Legend_Plot', which draws a sine wave and a few harmonics and makes a legend.  
+
+    grid_plot_names(1) = 'Legend_Plot'
+    grid_plot_names(2) = 'Simple_Plot'
+    grid_plot_names(3) = 'Legend_Plot'
+    grid_plot_names(4) = 'Simple_Plot'
+
+We put a maring of 0.5 em at the top, and set the distance between baselines in the legend to be 1.2 em; we specify the length of the lines in the legend to be 2.0em:
+
+    lgdplt_legend_top_margin_in_em = 0.5
+    lgdplt_legend_lineskip_in_em = 1.2
+    lgdplt_legend_line_length_in_em = 2.0 
+
+This gives the following plot; note that we have a bit of overhang on the upper right legend.
+
+![plot with legend](plt0.png "plot with legend")
+
+Notice that the text retains its size as we scale up
+
+    file_width = 15.0
+    
+![scaled up](plt1.png "scaled up")
+
+and down
+
+    file_width = 9.0
+    
+![scaled down](plt2.png "scaled down")
+
+Of course, our legend is now too big. Let's reduce that to 70% of the current text size
+
+    lgdplt_legend_txt_scale = 0.7
+
+This also reduces the line lengths, since they are in units of text size.
+
+![reduced scale legend](plt3.png "legend reduced by 0.7")
+
+
+Let's push the legend down and increase the spacing between lines
+
+    lgdplt_legend_top_margin_in_em = 2.5
+    lgdplt_legend_lineskip_in_em = 2.0
+
+Finally, let's set the target character size on the simple plots (upper left and lower right) to be 10px:
+
+    simplt_char_size_in_px = 10.0
+
+![text size change](plt5.png "with text size change on the simple plot")
 

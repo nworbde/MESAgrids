@@ -1,10 +1,10 @@
 &pggrid
     file_flag = .TRUE.
-    file_dir = '.'
-    file_prefix = 'grid7'
+    file_dir = '../doc'
+    file_prefix = 'plt3'
     file_device = 'png'
     file_extension = 'png'
-    file_width = 12.0
+    file_width = 9.0
     file_aspect_ratio = 0.6666667
 
     grid_col_offset_in_px = 20.0
@@ -37,16 +37,11 @@
     grid_plot_row(4) = 2
     grid_plot_rowspan(4) = 1
 
-    grid_pad_left = 0.05
-    grid_pad_right = 0.05
-    grid_pad_top = 0.05
-    grid_pad_bottom = 0.05
-
     simplt_pad_left_in_em = 4.0
     simplt_pad_right_in_em = 0.0
     simplt_pad_top_in_em = 4.0
     simplt_pad_bottom_in_em = 4.0
-    simplt_char_size_in_px = 10.0
+    simplt_char_size_in_px = 14.0
 
     lgdplt_pad_left_in_em = 4.0
     lgdplt_pad_right_in_em = 0.0
@@ -54,11 +49,11 @@
     lgdplt_pad_bottom_in_em = 4.0
     lgdplt_char_size_in_px = 14.0
     lgdplt_legend_txt_scale = 0.7
-    lgdplt_legend_width = 0.15
+    lgdplt_legend_width = 0.18
     
     lgdplt_legend_left_margin_in_em = 1.0
-    lgdplt_legend_top_margin_in_em = 2.5
-    lgdplt_legend_lineskip_in_em = 2.0
-    lgdplt_legend_line_length_in_em = 3.0 
+    lgdplt_legend_top_margin_in_em = 0.5
+    lgdplt_legend_lineskip_in_em = 1.2
+    lgdplt_legend_line_length_in_em = 2.0 
 
 /

@@ -54,7 +54,7 @@
     lgdplt_pad_bottom_in_em = 4.0
     lgdplt_char_size_in_px = 14.0
     lgdplt_legend_txt_scale = 1.0
-    lgdplt_legend_width = 0.15
+    lgdplt_legend_width = 0.18
     lgdplt_legend_left_margin_in_em = 1.0
     lgdplt_legend_top_margin_in_em = 0.5
     lgdplt_legend_lineskip_in_em = 1.2
