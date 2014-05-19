@@ -62,7 +62,7 @@ Let's reduce the number of plots: we'll make the upper right and lower left plot
     grid_plot_rowspan(4) = 1
 
 Here are the results:
-![grid with multiple columns](grid1.png "with plots spanning muliple columns")
+![](grid1.png "with plots spanning muliple columns")
 
 Of course, we need to allow space for the axes and plot titles.  We specify their lengths in units of the character size. Let's specify a target character size of 1 em = 14 px, and make the left, top, and bottom margins 4 em = 56 px:
 
@@ -74,13 +74,13 @@ Of course, we need to allow space for the axes and plot titles.  We specify thei
 
 (I am using the `simplt` flags for the boxes as well)
 
-![grid with padding for plot titles](grid2.png "with 4.0 em padding on left, bottom, and top")
+![](grid2.png "with 4.0 em padding on left, bottom, and top")
 
 Note that this spacing is fixed even as we reduce the plot size:
 
     file_width = 9.0
 
-![as above, but reduced in scale](grid3.png "scaled by 0.75")
+![](grid3.png "scaled by 0.75")
 
 Let's go back to our original size and make the upper right and lower left plots have room for a legend that takes up 0.18 of the plot width:
 
@@ -90,6 +90,8 @@ Let's go back to our original size and make the upper right and lower left plots
     lgdplt_legend_left_margin_in_em = 1.0
 
 We also specifed a gap of 1.0 em between the right edge of the plot and the legend.
+
+![](grid4.png "added legend")
 
 ## Adding plots
 
@@ -106,21 +108,21 @@ We put a maring of 0.5 em at the top, and set the distance between baselines in 
     lgdplt_legend_lineskip_in_em = 1.2
     lgdplt_legend_line_length_in_em = 2.0 
 
-This gives the following plot; note that we have a bit of overhang on the upper right legend.
+This gives the following plot.
 
-![plot with legend](plt0.png "plot with legend")
+![](plt0.png "plot with legend")
 
 Notice that the text retains its size as we scale up
 
     file_width = 15.0
     
-![scaled up](plt1.png "scaled up")
+![](plt1.png "scaled up")
 
 and down
 
     file_width = 9.0
     
-![scaled down](plt2.png "scaled down")
+![](plt2.png "scaled down")
 
 Of course, our legend is now too big. Let's reduce that to 70% of the current text size
 
@@ -128,7 +130,7 @@ Of course, our legend is now too big. Let's reduce that to 70% of the current te
 
 This also reduces the line lengths, since they are in units of text size.
 
-![reduced scale legend](plt3.png "legend reduced by 0.7")
+![](plt3.png "legend reduced by 0.7")
 
 
 Let's push the legend down and increase the spacing between lines
@@ -136,9 +138,11 @@ Let's push the legend down and increase the spacing between lines
     lgdplt_legend_top_margin_in_em = 2.5
     lgdplt_legend_lineskip_in_em = 2.0
 
+![](plt4.png "moved legend")
+
 Finally, let's set the target character size on the simple plots (upper left and lower right) to be 10px:
 
     simplt_char_size_in_px = 10.0
 
-![text size change](plt5.png "with text size change on the simple plot")
+![](plt5.png "with text size change on the simple plot")
 

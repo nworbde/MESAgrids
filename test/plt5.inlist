@@ -1,6 +1,6 @@
 &pggrid
     file_flag = .TRUE.
-    file_dir = '../doc'
+    file_dir = '.'
     file_prefix = 'plt5'
     file_device = 'png'
     file_extension = 'png'

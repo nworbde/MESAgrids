@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-for inlist in inlist*; do
-     echo "running $inlist"
+echo "doing the grid layout plots"
+for inlist in grid*.inlist; do
+     echo "   running $inlist..."
      ./run_test $inlist
+done
+
+echo "doing the example plots"
+for inlist in plt*.inlist; do
+    echo "   running $inlist..."
+    ./run_test $inlist
 done
