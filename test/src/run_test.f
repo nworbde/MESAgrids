@@ -16,9 +16,11 @@ program run_test
     end if
     
     call load_pggrid_controls(inlist_name, ierr)
-
+    
     if (ierr == 0) then    
         call make_pggrid_plot(ierr)
+    else
+        write (*,*) 'failure in load_pggrid_controls: error = ',ierr
     end if
     
 contains
