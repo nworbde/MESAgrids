@@ -85,11 +85,7 @@ contains
         xs = [(0.1*i,i=1,np)]
         ys = sin(xs)
         
-        ! get default char. size in pixels, and then scale to 
-        ! target size
-        call pgsch(1.0)
-        call pgqcs(3,xch,ych)
-        call pgsch(p% simplt_char_size_in_px/ych)
+        call set_text_size(p% simplt_char_size_in_px)
         
         ! get size in normalized units and set padding
         call pgqcs(0,em_x,em_y)
@@ -121,11 +117,7 @@ contains
         real :: xch, ych, em_x, em_y
         real :: vl, vr, vt, vb
         
-        ! get default char. size in pixels, and then scale to 
-        ! target size
-        call pgsch(1.0)
-        call pgqcs(3,xch,ych)
-        call pgsch(p% simplt_char_size_in_px/ych)
+        call set_text_size(p% simplt_char_size_in_px)
         
         ! get size in normalized units and set padding
         call pgqcs(0,em_x,em_y)
@@ -173,11 +165,7 @@ contains
             write(lgd_txt(i),'(a,i0)') 'freq. = ',i
         end do
 
-        ! get default( or current?) char. size in pixels, and then scale to 
-        ! target size
-        call pgsch(1.0)
-        call pgqcs(3,xch,ych)
-        call pgsch(p% lgdplt_char_size_in_px/xch)
+        call set_text_size(p% lgdplt_char_size_in_px)
         
         ! get size in normalized units and set padding
         call pgqcs(0,em_x,em_y)
@@ -256,11 +244,7 @@ contains
         real :: pl, pr, pt, pb
         integer :: ci, save_ci
 
-        ! get default( or current?) char. size in pixels, and then scale to 
-        ! target size
-        call pgsch(1.0)
-        call pgqcs(3,xch,ych)
-        call pgsch(p% lgdplt_char_size_in_px/xch)
+        call set_text_size(p% lgdplt_char_size_in_px)
         
         ! get size in normalized units and set padding
         call pgqcs(0,em_x,em_y)
@@ -321,4 +305,15 @@ contains
         call pgswin(xmin-margin*width,xmax+margin*width, &
         &   ymin-margin*height,ymax+margin*height)
     end subroutine set_boundaries
+    
+    subroutine set_text_size(size_px)
+        real, intent(in) :: size_px
+        real :: xch,ych
+        integer, parameter :: return_size_in_px = 3
+        ! set characters to default scale, query size in px, and then set scale
+        call pgsch(1.0)
+        call pgqcs(return_size_in_px,xch,ych)
+        call pgsch(p% lgdplt_char_size_in_px/xch)
+    end subroutine set_text_size
+    
 end module pg_plots
