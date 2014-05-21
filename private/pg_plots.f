@@ -1,5 +1,8 @@
 module pg_plots
     use pggrid_def
+
+    integer, parameter :: return_size_in_norm_units = 0
+    integer, parameter :: return_size_in_px = 3
     
 contains
     subroutine do_grid(p,xleft,xright,ytop,ybottom)
@@ -85,10 +88,8 @@ contains
         xs = [(0.1*i,i=1,np)]
         ys = sin(xs)
         
-        call set_text_size(p% simplt_char_size_in_px)
+        call set_text_size(p% simplt_char_size_in_px,em_x,em_y)
         
-        ! get size in normalized units and set padding
-        call pgqcs(0,em_x,em_y)
         padl = p% simplt_pad_left_in_em*em_x
         padr = p% simplt_pad_right_in_em*em_x
         padt = p% simplt_pad_top_in_em*em_y
@@ -117,10 +118,8 @@ contains
         real :: xch, ych, em_x, em_y
         real :: vl, vr, vt, vb
         
-        call set_text_size(p% simplt_char_size_in_px)
+        call set_text_size(p% simplt_char_size_in_px,em_x,em_y)
         
-        ! get size in normalized units and set padding
-        call pgqcs(0,em_x,em_y)
         padl = p% simplt_pad_left_in_em*em_x
         padr = p% simplt_pad_right_in_em*em_x
         padt = p% simplt_pad_top_in_em*em_y
@@ -165,10 +164,8 @@ contains
             write(lgd_txt(i),'(a,i0)') 'freq. = ',i
         end do
 
-        call set_text_size(p% lgdplt_char_size_in_px)
-        
-        ! get size in normalized units and set padding
-        call pgqcs(0,em_x,em_y)
+        call set_text_size(p% lgdplt_char_size_in_px,em_x,em_y)
+
         padl = p% lgdplt_pad_left_in_em*em_x
         padr = p% lgdplt_pad_right_in_em*em_x
         padt = p% lgdplt_pad_top_in_em*em_y
@@ -215,7 +212,7 @@ contains
         ! apply legend text scaling
         call pgqch(text_scale)
         call pgsch(p% lgdplt_legend_txt_scale*text_scale)
-        call pgqcs(0,em_x,em_y)
+        call get_em_size(em_x,em_y)
 
         xl = [ ll, ll+p% lgdplt_legend_line_length_in_em*em_x ]
         yl = lt - (p% lgdplt_legend_top_margin_in_em+0.5)*em_y
@@ -244,10 +241,8 @@ contains
         real :: pl, pr, pt, pb
         integer :: ci, save_ci
 
-        call set_text_size(p% lgdplt_char_size_in_px)
+        call set_text_size(p% lgdplt_char_size_in_px,em_x,em_y)
         
-        ! get size in normalized units and set padding
-        call pgqcs(0,em_x,em_y)
         padl = p% lgdplt_pad_left_in_em*em_x
         padr = p% lgdplt_pad_right_in_em*em_x
         padt = p% lgdplt_pad_top_in_em*em_y
@@ -306,14 +301,22 @@ contains
         &   ymin-margin*height,ymax+margin*height)
     end subroutine set_boundaries
     
-    subroutine set_text_size(size_px)
+    subroutine set_text_size(size_px,em_x,em_y)
+        ! input is character size in pixels; on output it returns the em-unit 
+        ! in normalized coordinates
         real, intent(in) :: size_px
+        real, intent(out) :: em_x,em_y
         real :: xch,ych
-        integer, parameter :: return_size_in_px = 3
         ! set characters to default scale, query size in px, and then set scale
         call pgsch(1.0)
         call pgqcs(return_size_in_px,xch,ych)
-        call pgsch(p% lgdplt_char_size_in_px/xch)
+        call pgsch(size_px/xch)
+        call pgqcs(return_size_in_norm_units,em_x,em_y)
     end subroutine set_text_size
+    
+    subroutine get_em_size(em_x,em_y)
+        real, intent(out) :: em_x,em_y
+        call pgqcs(return_size_in_norm_units,em_x,em_y)
+    end subroutine get_em_size
     
 end module pg_plots
