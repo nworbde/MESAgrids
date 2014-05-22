@@ -4,4 +4,4 @@ run_test
 *.png
 *.ps
 *.a
-
+show_layout

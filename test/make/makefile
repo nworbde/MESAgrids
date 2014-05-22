@@ -22,6 +22,9 @@ default: install
 $(TESTER): $(TEST_OBJS) $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ $(TEST_OBJS) $(LOAD_LOCAL) $(LOAD_OTHER)
 	
+show_layout: boxes.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
+	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ boxes.o $(LOAD_LOCAL) $(LOAD_OTHER)
+
 install: $(TESTER)
 	cp $? $(TEST_DIR)
 
