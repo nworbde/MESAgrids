@@ -44,6 +44,8 @@
     real :: lgdplt_pad_top_in_em
     real :: lgdplt_pad_bottom_in_em
     real :: lgdplt_char_size_in_px
+    real :: lgdplt_plot_right_edge
+    real :: lgdplt_legend_left_edge
     real :: lgdplt_legend_txt_scale
     real :: lgdplt_legend_left
     real :: lgdplt_legend_top

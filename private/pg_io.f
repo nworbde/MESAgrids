@@ -47,6 +47,8 @@ module pg_io
         lgdplt_pad_top_in_em, &
         lgdplt_pad_bottom_in_em, &
         lgdplt_char_size_in_px, &
+        lgdplt_plot_right_edge, &
+        lgdplt_legend_left_edge, &
         lgdplt_legend_txt_scale, &
         lgdplt_legend_left, &
         lgdplt_legend_top, &
@@ -145,6 +147,8 @@ module pg_io
                 p% lgdplt_pad_top_in_em = lgdplt_pad_top_in_em
                 p% lgdplt_pad_bottom_in_em = lgdplt_pad_bottom_in_em
                 p% lgdplt_char_size_in_px = lgdplt_char_size_in_px
+                p% lgdplt_plot_right_edge = lgdplt_plot_right_edge
+                p% lgdplt_legend_left_edge = lgdplt_legend_left_edge
                 p% lgdplt_legend_txt_scale = lgdplt_legend_txt_scale
                 p% lgdplt_legend_left = lgdplt_legend_left
                 p% lgdplt_legend_top = lgdplt_legend_top

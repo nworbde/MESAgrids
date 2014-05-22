@@ -40,6 +40,8 @@
     lgdplt_pad_top_in_em = 4.0
     lgdplt_pad_bottom_in_em = 4.0
     lgdplt_char_size_in_px = 14.0
+    lgdplt_plot_right_edge = 0.85
+    lgdplt_legend_left_edge = 0.85
     lgdplt_legend_txt_scale = 1.0
     lgdplt_legend_left = 0.75
     lgdplt_legend_top = 1.0

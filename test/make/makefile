@@ -25,6 +25,9 @@ $(TESTER): $(TEST_OBJS) $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 show_layout: boxes.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ boxes.o $(LOAD_LOCAL) $(LOAD_OTHER)
 
+show_legend_layout: boxes_legends.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
+	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ boxes_legends.o $(LOAD_LOCAL) $(LOAD_OTHER)
+
 install: $(TESTER)
 	cp $? $(TEST_DIR)
 

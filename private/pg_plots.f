@@ -170,7 +170,7 @@ contains
         real, dimension(np,nl) :: ys
         real, parameter :: pi = 3.141592653590
         real, parameter :: margin = 0.05
-        real :: line_left
+        real :: line_left, pr
         real, dimension(2) :: xl, yl
         real :: xtxt, ytxt
         integer :: ci, save_ci
@@ -194,13 +194,15 @@ contains
         height = ytop-ybottom
         
         ! locate the plot area
-        vl = xleft + p% simplt_left_margin*width + padl
-        vr = xright -p% simplt_right_margin*width - padr
-        vt = ytop - p% simplt_top_margin*height - padt
-        vb = ybottom + p% simplt_bottom_margin*height + padb
-               
+        vl = xleft + p% lgdplt_left_margin*width + padl
+        vr = xright -p% lgdplt_right_margin*width - padr
+        vt = ytop - p% lgdplt_top_margin*height - padt
+        vb = ybottom + p% lgdplt_bottom_margin*height + padb
+        
+        pr = vl + p% lgdplt_plot_right_edge*(vr-vl)
+        
         ! set plot viewport and make plot
-        call pgsvp(vl,vr,vb,vt)
+        call pgsvp(vl,pr,vb,vt)
         call set_boundaries(xs,ys(:,nl),margin)
         call pgbox('BCNST',0.0,0,'BCNSTV',0.0,0)
         call pglab('x','y','plot with legend')
@@ -215,10 +217,10 @@ contains
         
         ! make legend
         ! locate the legend
-        lr = xright
-        ll = xleft + p% lgdplt_legend_left*width
-        lt = ybottom + p% lgdplt_legend_top*height
-        lb = ybottom
+        lr = vr
+        ll = vl + p% lgdplt_legend_left_edge*(vr-vl)
+        lt = vb + p% lgdplt_legend_top*(vt-vb)
+        lb = vb
  
         call pgsvp(ll,lr,lb,lt)
         ! match world coordinates to normalized locations of patch
@@ -228,9 +230,10 @@ contains
         call pgsch(p% lgdplt_legend_txt_scale*text_scale)
         call get_em_size(em_x,em_y)
 
-        line_left = ll + p% lgdplt_legend_left_margin_in_em
+        line_left = ll + p% lgdplt_legend_left_margin_in_em*em_x
         xl = [ line_left, line_left + p% lgdplt_legend_line_length_in_em*em_x ]
         yl = lt - (p% lgdplt_legend_top_margin_in_em+0.5)*em_y
+
         ci = save_ci
         do i = 1, nl
             call pgsci(ci)
@@ -251,7 +254,7 @@ contains
         real, intent(in) :: xleft, xright, ytop, ybottom
         real :: padl, padr, padt, padb
         real :: xch, ych, em_x, em_y, txt_scale
-        real :: vl, vr, vt, vb, width, height
+        real :: vl, vr, vt, vb, width, height, pr
         real :: ll, lr, lt, lb
         integer :: ci, save_ci
 
@@ -266,22 +269,24 @@ contains
         height = ytop-ybottom
         
         ! locate the plot area
-        vl = xleft + p% simplt_left_margin*width + padl
-        vr = xright -p% simplt_right_margin*width - padr
-        vt = ytop - p% simplt_top_margin*height - padt
-        vb = ybottom + p% simplt_bottom_margin*height + padb
+        vl = xleft + p% lgdplt_left_margin*width + padl
+        vr = xright -p% lgdplt_right_margin*width - padr
+        vt = ytop - p% lgdplt_top_margin*height - padt
+        vb = ybottom + p% lgdplt_bottom_margin*height + padb
          
+        pr = vl + p% lgdplt_plot_right_edge*(vr-vl)
+        
         ! set plot viewport and make plot
-        call pgsvp(vl,vr,vb,vt)
+        call pgsvp(vl,pr,vb,vt)
         call pgswin(0.0,1.0,0.0,1.0)
         call pgbox('BC',0.0,0,'BC',0.0,0)
         
         ! make legend
         ! locate the legend
-        lr = xright
-        ll = xleft + p% lgdplt_legend_left*width
-        lt = ybottom + p% lgdplt_legend_top*height
-        lb = ybottom
+        lr = vr
+        ll = vl + p% lgdplt_legend_left_edge*(vr-vl)
+        lt = vb + p% lgdplt_legend_top*(vt-vb)
+        lb = vb
 
         call pgsvp(ll,lr,lb,lt)
         ! match world coordinates to normalized locations of patch
