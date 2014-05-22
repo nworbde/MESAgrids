@@ -28,6 +28,9 @@ show_layout: boxes.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 show_legend_layout: boxes_legends.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ boxes_legends.o $(LOAD_LOCAL) $(LOAD_OTHER)
 
+chk_pgplot: ck_pgplot.o
+	$(LOADER)  $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ ck_pgplot.o $(LOAD_PGPLOT)
+
 install: $(TESTER)
 	cp $? $(TEST_DIR)
 

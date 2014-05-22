@@ -1,6 +1,6 @@
     file_flag = .FALSE.
     file_dir = '.'
-    file_prefix = 'grid_'
+    file_prefix = 'grid'
     file_device = 'png'
     file_extension = 'png'
     file_width = 12.0

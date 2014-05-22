@@ -39,7 +39,7 @@ contains
            
            failed = (ierr /= 0)
            if (failed) then
-              write(*, *) 'failure opening device '//trim(str) // '. ierr = ', &
+              write(*, *) 'failure opening device '//trim(str) // ': ierr = ', &
               & ierr
            end if
         end function failed
@@ -77,11 +77,9 @@ contains
         end if
 
         if (is_file) then
-            print *,'setting file width and aspect ratio'
             width = p% file_width; if (width < 0) width = p% win_width
             ratio = p% file_aspect_ratio; if (ratio < 0)  &
             &   ratio = p% win_aspect_ratio
-            print *, width, ratio
             call pgpap(width, ratio)
         else
             call pgpap(p% win_width, p% win_aspect_ratio)
