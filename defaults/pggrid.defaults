@@ -1,5 +1,5 @@
     file_flag = .FALSE.
-    file_dir = './'
+    file_dir = '.'
     file_prefix = 'grid_'
     file_device = 'png'
     file_extension = 'png'
@@ -18,7 +18,7 @@
     grid_plot_rowspan(:) = 0
     grid_col_offset_in_px = 20.0
     grid_row_offset_in_px = 20.0
-    grid_left_margin = 0.02    
+    grid_left_margin = 0.02
     grid_right_margin = 0.02
     grid_top_margin = 0.02
     grid_bottom_margin = 0.02
@@ -43,7 +43,6 @@
     lgdplt_plot_right_edge = 0.85
     lgdplt_legend_left_edge = 0.85
     lgdplt_legend_txt_scale = 1.0
-    lgdplt_legend_left = 0.75
     lgdplt_legend_top = 1.0
     lgdplt_legend_left_margin_in_em = 1.0
     lgdplt_legend_top_margin_in_em = 0.5

@@ -47,7 +47,6 @@
     real :: lgdplt_plot_right_edge
     real :: lgdplt_legend_left_edge
     real :: lgdplt_legend_txt_scale
-    real :: lgdplt_legend_left
     real :: lgdplt_legend_top
     real :: lgdplt_legend_left_margin_in_em
     real :: lgdplt_legend_top_margin_in_em

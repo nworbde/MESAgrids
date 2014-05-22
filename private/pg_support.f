@@ -8,6 +8,7 @@ contains
         type(pg_data), pointer :: p
         if (have_initialized_pg) return
         p% id_win = 0
+        p% id_file = 0
     end subroutine pg_clear
     
     subroutine do_open(p, ierr)
@@ -76,9 +77,11 @@ contains
         end if
 
         if (is_file) then
+            print *,'setting file width and aspect ratio'
             width = p% file_width; if (width < 0) width = p% win_width
             ratio = p% file_aspect_ratio; if (ratio < 0)  &
             &   ratio = p% win_aspect_ratio
+            print *, width, ratio
             call pgpap(width, ratio)
         else
             call pgpap(p% win_width, p% win_aspect_ratio)

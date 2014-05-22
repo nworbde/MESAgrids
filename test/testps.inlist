@@ -1,8 +1,8 @@
 &pggrid
     file_flag = .TRUE.
-    file_dir = '.'
+    file_dir = 'plots_out'
     file_prefix = 'test_grid'
-    file_device = 'ps'
+    file_device = 'cps'
     file_extension = 'ps'
     file_width = 9.0
     win_width = 12.0
@@ -46,5 +46,15 @@
     grid_plot_colspan(4) = 1
     grid_plot_row(4) = 2
     grid_plot_rowspan(4) = 1
+
+    simplt_left_margin = 0.0
+    simplt_right_margin = 0.0
+    simplt_top_margin = 0.0
+    simplt_bottom_margin =  0.0
+    
+    lgdplt_left_margin = 0.0
+    lgdplt_right_margin = 0.0
+    lgdplt_top_margin = 0.0
+    lgdplt_bottom_margin = 0.0
 
 /

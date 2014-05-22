@@ -46,7 +46,7 @@ contains
 !         end if
 
         select case(which_plot)
-        case('Grid_plot')
+        case('Grid_Plot')
             call do_grid(p,0.0,1.0,1.0,0.0,1.0)
         case('Legend_Plot')
             call do_lgdplt(p,0.0,1.0,1.0,0.0,1.0)
@@ -59,7 +59,8 @@ contains
         case default
             write(error_unit,*) 'make_pggrid_plot: did not recognize plot_name'
         end select
-        
+
         call pgclos
+        
     end subroutine make_pggrid_plot
 end module pggrid_lib

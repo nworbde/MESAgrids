@@ -16,7 +16,7 @@ contains
         real :: plot_xleft, plot_xright, plot_ytop, plot_ybottom
         real :: width, height
         integer :: i
-        
+                
         ! get the width and height of the viewing surface in px, adjust offsets 
         ! accordingly
         call pgqvsz(3,xzero,width_px,yzero,height_px)
@@ -30,7 +30,7 @@ contains
         margin_xright = xright-p% grid_right_margin*width
         margin_ytop = ytop - p% grid_top_margin*height
         margin_ybottom = ybottom + p% grid_bottom_margin*height
-        
+                
         ! adjust padding if necessary
         col_width = 0.0
         row_height = 0.0
@@ -49,7 +49,7 @@ contains
             &   margin_ytop - (row_height+row_offset)*(p% grid_plot_row(i)-1)
             plot_ybottom = plot_ytop - row_height - &
             &   (row_height+row_offset)*(p% grid_plot_rowspan(i)-1)
-                        
+
             select case(p% grid_plot_names(i))
             case ('Legend_Plot')
                 call do_lgdplt(p, plot_xleft, plot_xright, &

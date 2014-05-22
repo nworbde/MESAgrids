@@ -1,19 +1,17 @@
 &pggrid
     file_flag = .TRUE.
-    file_dir = '.'
+    file_dir = 'plots_out'
     file_prefix = 'test_grid'
     file_device = 'png'
     file_extension = 'png'
-    file_width = 12.0
+    file_width = 9.0
     win_width = 12.0
-!     file_aspect_ratio = two_thirds
-!     win_aspect_ratio = two_thirds
-
-!     max_fraction_padding = one_third
     lgdplt_legend_txt_scale = 0.7
     
     grid_col_offset_in_px = 20.0
     grid_row_offset_in_px = 20.0
+    simplt_char_size_in_px = 14.0
+    lgdplt_char_size_in_px = 14.0
     
     grid_num_cols = 3
     grid_num_rows = 2
@@ -41,5 +39,15 @@
     grid_plot_colspan(4) = 1
     grid_plot_row(4) = 2
     grid_plot_rowspan(4) = 1
+
+    simplt_left_margin = 0.0
+    simplt_right_margin = 0.0
+    simplt_top_margin = 0.0
+    simplt_bottom_margin =  0.0
+    
+    lgdplt_left_margin = 0.0
+    lgdplt_right_margin = 0.0
+    lgdplt_top_margin = 0.0
+    lgdplt_bottom_margin = 0.0
 
 /

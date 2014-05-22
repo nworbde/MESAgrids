@@ -50,7 +50,6 @@ module pg_io
         lgdplt_plot_right_edge, &
         lgdplt_legend_left_edge, &
         lgdplt_legend_txt_scale, &
-        lgdplt_legend_left, &
         lgdplt_legend_top, &
         lgdplt_legend_left_margin_in_em, &
         lgdplt_legend_top_margin_in_em, &
@@ -150,7 +149,6 @@ module pg_io
                 p% lgdplt_plot_right_edge = lgdplt_plot_right_edge
                 p% lgdplt_legend_left_edge = lgdplt_legend_left_edge
                 p% lgdplt_legend_txt_scale = lgdplt_legend_txt_scale
-                p% lgdplt_legend_left = lgdplt_legend_left
                 p% lgdplt_legend_top = lgdplt_legend_top
                 p% lgdplt_legend_left_margin_in_em = lgdplt_legend_left_margin_in_em
                 p% lgdplt_legend_top_margin_in_em = lgdplt_legend_top_margin_in_em
