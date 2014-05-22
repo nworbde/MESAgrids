@@ -8,6 +8,7 @@ contains
         type(pg_data), pointer :: p
         if (have_initialized_pg) return
         p% id_win = 0
+        p% id_file = 0
     end subroutine pg_clear
     
     subroutine do_open(p, ierr)
@@ -38,7 +39,7 @@ contains
            
            failed = (ierr /= 0)
            if (failed) then
-              write(*, *) 'failure opening device '//trim(str) // '. ierr = ', &
+              write(*, *) 'failure opening device '//trim(str) // ': ierr = ', &
               & ierr
            end if
         end function failed

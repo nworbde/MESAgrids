@@ -22,6 +22,15 @@ default: install
 $(TESTER): $(TEST_OBJS) $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ $(TEST_OBJS) $(LOAD_LOCAL) $(LOAD_OTHER)
 	
+show_layout: boxes.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
+	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ boxes.o $(LOAD_LOCAL) $(LOAD_OTHER)
+
+show_legend_layout: boxes_legends.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
+	$(LOADER) $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ boxes_legends.o $(LOAD_LOCAL) $(LOAD_OTHER)
+
+chk_pgplot: ck_pgplot.o
+	$(LOADER)  $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ ck_pgplot.o $(LOAD_PGPLOT)
+
 install: $(TESTER)
 	cp $? $(TEST_DIR)
 

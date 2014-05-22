@@ -47,4 +47,14 @@
     grid_plot_row(4) = 2
     grid_plot_rowspan(4) = 1
 
+    simplt_left_margin = 0.0
+    simplt_right_margin = 0.0
+    simplt_top_margin = 0.0
+    simplt_bottom_margin =  0.0
+    
+    lgdplt_left_margin = 0.0
+    lgdplt_right_margin = 0.0
+    lgdplt_top_margin = 0.0
+    lgdplt_bottom_margin = 0.0
+
 /
