@@ -16,9 +16,12 @@ program run_test
     end if
     
     call load_pggrid_controls(inlist_name, ierr)
-    if (failed('load_pggrid_controls')) stop
-    call make_pggrid_plot('Grid_Plot',ierr)
-    if (failed('make_pggrid_plot')) stop
+    
+    if (ierr == 0) then    
+        call make_pggrid_plot(ierr)
+    else
+        write (*,*) 'failure in load_pggrid_controls: error = ',ierr
+    end if
     
 contains
     subroutine show_help()
@@ -28,13 +31,4 @@ contains
         write(error_unit,*) 'usage: '//trim(prog_name)//' <name of inlist file>'
         stop
     end subroutine show_help
-    function failed(str)
-        character(len=*), intent(in) :: str
-        logical :: failed
-        failed = (ierr /= 0)
-        if (failed) then
-            write(error_unit,'(a,i0)') 'failure in '//trim(str)//': ierr = ', &
-            & ierr
-        end if
-    end function failed
 end program run_test
