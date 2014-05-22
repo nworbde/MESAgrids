@@ -25,6 +25,6 @@ Installation
 TODO
 ---
 
-1.  Primitive routines take xleft, xright, ytop, ybottom (norm. coord.) and a text scale.  Locate viewport by applying margins (in fractional size of plotting area) and then applying padding (in em).
+1.  Primitive routines take xleft, xright, ytop, ybottom (norm. coord.) and a text size (px).  Locate viewport by applying margins (in fractional size of plotting area) and then applying padding (in em).
 
 2.  Legend specified by left-side and top-side.  Lines, text located relative to this with topskip, left_margin (in em).
