@@ -89,7 +89,7 @@ contains
         type(pg_data), pointer :: p
         real, intent(in) :: xleft, xright, ytop, ybottom,txt_scale
         integer, parameter :: np=100
-        integer :: i
+        integer :: i, ci
         real, dimension(np) :: xs, ys
         real :: padl, padr, padt, padb, width, height
         real :: xch, ych, em_x, em_y
@@ -109,6 +109,21 @@ contains
         
         width = xright-xleft
         height = ytop-ybottom
+        
+        if (p% simplt_show_margin_box) then
+            vl = xleft + p% simplt_left_margin*width
+            vr = xright -p% simplt_right_margin*width
+            vt = ytop - p% simplt_top_margin*height
+            vb = ybottom + p% simplt_bottom_margin*height
+            call pgsvp(vl,vr,vb,vt)
+            call pgswin(0.0,1.0,0.0,1.0)
+            call pgqci(ci)
+            ci = ci+1
+            call pgsci(ci)
+            call pgbox('BC',0.0,0,'BC',0.0,0)
+            ci = ci - 1
+            call pgsci(ci)
+        end if
         
         ! locate the viewport
         vl = xleft + p% simplt_left_margin*width + padl
@@ -192,6 +207,21 @@ contains
         
         width = xright-xleft
         height = ytop-ybottom
+        
+        if (p% lgdplt_show_margin_box) then
+            vl = xleft + p% lgdplt_left_margin*width
+            vr = xright -p% lgdplt_right_margin*width
+            vt = ytop - p% lgdplt_top_margin*height
+            vb = ybottom + p% lgdplt_bottom_margin*height
+            call pgsvp(vl,vr,vb,vt)
+            call pgswin(0.0,1.0,0.0,1.0)
+            call pgqci(ci)
+            ci = ci+1
+            call pgsci(ci)
+            call pgbox('BC',0.0,0,'BC',0.0,0)
+            ci = ci - 1
+            call pgsci(ci)
+        end if
         
         ! locate the plot area
         vl = xleft + p% lgdplt_left_margin*width + padl

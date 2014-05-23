@@ -6,10 +6,15 @@ program boxes
     integer :: ierr
     
     call get_pg_pointer(p)
-    p% file_flag = .FALSE.
+    p% file_flag = .TRUE.
+    p% file_dir = '.'
+    p% file_prefix = 'box'
+    p% file_device = 'png'
+    p% file_extension = 'png'
     p% win_width = 6.0
     p% win_aspect_ratio = 0.618
-    
+    p% file_width = 6.0
+    p% file_aspect_ratio = 0.618
     p% simplt_char_size_in_px = 14.0
     
     ! make a box around the margin
@@ -25,10 +30,12 @@ program boxes
     call make_pggrid_plot('Box',ierr)
     
     ! now make the simple plot, same margins, but with 4 em padding
+    p% file_prefix = 'box_with_simple_plot'
     p% simplt_pad_left_in_em = 4
     p% simplt_pad_right_in_em = 0
     p% simplt_pad_top_in_em = 4
     p% simplt_pad_bottom_in_em = 4
+    p% simplt_show_margin_box = .TRUE.
     
     call make_pggrid_plot('Simple_Plot',ierr)
     

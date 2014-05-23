@@ -34,6 +34,7 @@
     real :: simplt_pad_top_in_em
     real :: simplt_pad_bottom_in_em
     real :: simplt_char_size_in_px
+    logical :: simplt_show_margin_box
 
     real :: lgdplt_left_margin
     real :: lgdplt_right_margin
@@ -52,6 +53,7 @@
     real :: lgdplt_legend_top_margin_in_em
     real :: lgdplt_legend_lineskip_in_em
     real :: lgdplt_legend_line_length_in_em
+    logical :: lgdplt_show_margin_box
 
     ! internal, private
     integer :: id_win

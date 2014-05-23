@@ -38,6 +38,7 @@ module pg_io
         simplt_pad_top_in_em, &
         simplt_pad_bottom_in_em, &
         simplt_char_size_in_px, &
+        simplt_show_margin_box, &
         lgdplt_left_margin, &
         lgdplt_right_margin, &
         lgdplt_top_margin, &
@@ -54,7 +55,8 @@ module pg_io
         lgdplt_legend_left_margin_in_em, &
         lgdplt_legend_top_margin_in_em, &
         lgdplt_legend_lineskip_in_em, &
-        lgdplt_legend_line_length_in_em
+        lgdplt_legend_line_length_in_em, &
+        lgdplt_show_margin_box
     
     contains
         
@@ -137,6 +139,7 @@ module pg_io
                 p% simplt_pad_top_in_em = simplt_pad_top_in_em
                 p% simplt_pad_bottom_in_em = simplt_pad_bottom_in_em
                 p% simplt_char_size_in_px = simplt_char_size_in_px
+                p% simplt_show_margin_box = simplt_show_margin_box
                 p% lgdplt_left_margin = lgdplt_left_margin
                 p% lgdplt_right_margin = lgdplt_right_margin
                 p% lgdplt_top_margin = lgdplt_top_margin
@@ -154,6 +157,7 @@ module pg_io
                 p% lgdplt_legend_top_margin_in_em = lgdplt_legend_top_margin_in_em
                 p% lgdplt_legend_lineskip_in_em = lgdplt_legend_lineskip_in_em
                 p% lgdplt_legend_line_length_in_em = lgdplt_legend_line_length_in_em
+                p% lgdplt_show_margin_box = lgdplt_show_margin_box
             
         end subroutine store_pggrid_controls
         

@@ -31,6 +31,7 @@
     simplt_pad_top_in_em = 4.0
     simplt_pad_bottom_in_em = 4.0
     simplt_char_size_in_px = 14.0
+    simplt_show_margin_box = .FALSE.
     lgdplt_left_margin = 0.02
     lgdplt_right_margin = 0.02
     lgdplt_top_margin = 0.02
@@ -48,4 +49,5 @@
     lgdplt_legend_top_margin_in_em = 0.5
     lgdplt_legend_lineskip_in_em = 1.2
     lgdplt_legend_line_length_in_em = 2.0
+    lgdplt_show_margin_box = .FALSE.
     
