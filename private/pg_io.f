@@ -1,5 +1,4 @@
 module pg_io
-    use const_def
     use pggrid_def
 
     include 'pggrid_controls.f'

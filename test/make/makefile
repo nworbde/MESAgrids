@@ -4,7 +4,7 @@ LIB_NAME = pggrid
 LIB_FILENAME = lib$(LIB_NAME).a
 
 LOAD_LOCAL = -L$(LOCAL_LIB_DIR) -l$(LIB_NAME)
-LOAD_OTHER = $(LOAD_PGPLOT) -L$(MESA_LIB_DIR) -lconst -lutils
+LOAD_OTHER = $(LOAD_PGPLOT) -L$(MESA_LIB_DIR) -lutils
 
 TESTER = run_test
 TEST_OBJS = run_test.o
@@ -31,8 +31,8 @@ show_legend_layout: boxes_legends.o $(LOCAL_LIB_DIR)/$(LIB_FILENAME)
 chk_pgplot: ck_pgplot.o
 	$(LOADER)  $(FCbasic) $(FCopenmp) $(FCstatic) -o $@ ck_pgplot.o $(LOAD_PGPLOT)
 
-install: $(TESTER)
+install: $(TESTER) show_layout show_legend_layout
 	cp $? $(TEST_DIR)
 
 clean:
-	-@rm -f *.o *.mod $(TESTER)
+	-@rm -f *.o *.mod $(TESTER) show*_layout
