@@ -11,7 +11,7 @@ module pggrid_def
 
     contains
         subroutine get_pg_pointer(p)
-            type(pg_data), pointer, intent(out) ::  p
+            type(pg_data), pointer, intent(out) ::  p=>null()
             p => pg_info
         end subroutine get_pg_pointer
 end module pggrid_def
