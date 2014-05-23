@@ -23,10 +23,10 @@ contains
             &   p% file_extension, name)
             write (*,*) trim(name)
             name = trim(name) // '/' // trim(p% file_device)
-            call open_device(p,.TRUE.,name,p% id_file, ierr)
+            call open_device(p,.TRUE.,name, ierr)
             if (failed(name)) return
         else
-            call open_device(p,.FALSE.,'/xwin',p% id_win,ierr)
+            call open_device(p,.FALSE.,'/xwin',ierr)
             if (failed('/xwin')) return
         end if
         
@@ -59,18 +59,17 @@ contains
         name = trim(name) // '.' // trim(extension)
     end subroutine create_file_name
 
-    subroutine open_device(p, is_file, dev, id, ierr)
+    subroutine open_device(p, is_file, dev,ierr)
         use, intrinsic :: iso_fortran_env, only : error_unit
         type(pg_data), pointer :: p
         logical, intent(in) :: is_file
         character(len=*), intent(in) :: dev
-        integer, intent(out) :: id
         integer, intent(out) :: ierr
         real :: width, ratio
         integer :: pgopen
 
-        id = pgopen(trim(dev))
-        if (id <= 0) then
+        p% device_id = pgopen(trim(dev))
+        if (p% device_id <= 0) then
             write(error_unit,*) 'PGPLOT failed to open '//trim(dev)
             ierr = -1
             return

@@ -29,7 +29,7 @@ program boxes
     p% lgdplt_legend_txt_scale = 0.7
     p% lgdplt_plot_right_edge = 0.75
     p% lgdplt_legend_left_edge = 0.75
-    p% lgdplt_legend_top = 1.0
+    p% lgdplt_legend_top_edge = 1.0
     p% lgdplt_legend_left_margin_in_em = 1.0
     p% lgdplt_legend_top_margin_in_em = 0.5
     p% lgdplt_legend_lineskip_in_em = 1.2

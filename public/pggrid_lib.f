@@ -60,14 +60,8 @@ contains
             write(error_unit,*) 'make_pggrid_plot: did not recognize plot_name'
         end select
 
-        if (p% id_win > 0) then
-            call pgslct(p% id_win)
-            call pgclos()
-        end if
-        if (p% id_file > 0) then
-            call pgslct(p% id_file)
-            call pgclos()
-        end if
+        call pgslct(p% device_id)
+        call pgclos()
         
     end subroutine make_pggrid_plot
 end module pggrid_lib
