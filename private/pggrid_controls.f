@@ -57,5 +57,5 @@
     logical :: lgdplt_show_margin_box
 
     ! internal, private
-    integer :: id_win
-    integer :: id_file
+    integer :: device_id
+    logical :: is_file
