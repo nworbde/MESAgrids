@@ -24,7 +24,8 @@
     real :: grid_right_margin
     real :: grid_top_margin
     real :: grid_bottom_margin
-
+    real :: grid_subplot_text_scale
+    
     real :: simplt_left_margin
     real :: simplt_right_margin
     real :: simplt_top_margin
@@ -48,7 +49,7 @@
     real :: lgdplt_plot_right_edge
     real :: lgdplt_legend_left_edge
     real :: lgdplt_legend_txt_scale
-    real :: lgdplt_legend_top
+    real :: lgdplt_legend_top_edge
     real :: lgdplt_legend_left_margin_in_em
     real :: lgdplt_legend_top_margin_in_em
     real :: lgdplt_legend_lineskip_in_em

@@ -10,14 +10,15 @@
     grid_num_cols = 3
     grid_num_rows = 2
     grid_num_plots = 6
-
+    grid_subplot_text_scale = 0.85
+    
     grid_col_offset_in_px = 20.0
     grid_row_offset_in_px = 20.0
-    grid_pad_left = 0.02
-    grid_pad_right = 0.02
-    grid_pad_top = 0.02
-    grid_pad_bottom = 0.02
-        
+    grid_left_margin = 0.02
+    grid_right_margin = 0.02
+    grid_top_margin = 0.02
+    grid_bottom_margin = 0.02
+    
     grid_plot_names(1) = 'Box'
     grid_plot_col(1) = 1
     grid_plot_row(1) = 1
@@ -54,22 +55,31 @@
     grid_plot_colspan(6) = 1
     grid_plot_rowspan(6) = 1
 
+    simplt_left_margin = 0.0
+    simplt_right_margin = 0.0
+    simplt_top_margin = 0.0
+    simplt_bottom_margin =  0.0
     simplt_pad_left_in_em = 0.0
     simplt_pad_right_in_em = 0.0
     simplt_pad_top_in_em = 0.0
     simplt_pad_bottom_in_em = 0.0
     simplt_char_size_in_px = 14.0
 
+    lgdplt_left_margin = 0.0
+    lgdplt_right_margin = 0.0
+    lgdplt_top_margin = 0.0
+    lgdplt_bottom_margin = 0.0
     lgdplt_pad_left_in_em = 0.0
     lgdplt_pad_right_in_em = 0.0
     lgdplt_pad_top_in_em = 0.0
     lgdplt_pad_bottom_in_em = 0.0
     lgdplt_char_size_in_px = 14.0
-    lgdplt_legend_txt_scale = 1.0
-    lgdplt_legend_width = 0.25
+    lgdplt_legend_txt_scale = 0.85
+    lgdplt_legend_left_edge = 0.85
+    lgdplt_legend_top_edge = 1.0
     lgdplt_legend_left_margin_in_em = 1.0
     lgdplt_legend_top_margin_in_em = 0.5
     lgdplt_legend_lineskip_in_em = 1.2
-    lgdplt_legend_line_length_in_em = 2.0 
+    lgdplt_legend_line_length_in_em = 2.0
 
 /

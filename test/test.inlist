@@ -6,7 +6,7 @@
     file_extension = 'png'
     file_width = 12.0
     win_width = 12.0
-    lgdplt_legend_txt_scale = 0.7
+    lgdplt_legend_txt_scale = 0.85
 
     grid_col_offset_in_px = 20.0
     grid_row_offset_in_px = 20.0
@@ -21,6 +21,7 @@
     grid_plot_colspan(1) = 2
     grid_plot_row(1) = 1
     grid_plot_rowspan(1) = 1
+    grid_subplot_text_scale = 0.85
 
     grid_plot_names(2) = 'Simple_Plot'
     grid_plot_col(2) = 1

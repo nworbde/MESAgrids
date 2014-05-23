@@ -53,15 +53,19 @@ contains
             select case(p% grid_plot_names(i))
             case ('Legend_Plot')
                 call do_lgdplt(p, plot_xleft, plot_xright, &
-                &   plot_ytop, plot_ybottom,txt_scale)
+                &   plot_ytop, plot_ybottom, &
+                & txt_scale*p% grid_subplot_text_scale)
             case ('Simple_Plot')
                 call do_simplt(p, plot_xleft, plot_xright, &
-                &   plot_ytop, plot_ybottom,txt_scale)
+                &   plot_ytop, plot_ybottom, &
+                & txt_scale*p% grid_subplot_text_scale)
             case ('Box')
-                call do_box(p,plot_xleft,plot_xright,plot_ytop,plot_ybottom,txt_scale)
+                call do_box(p,plot_xleft,plot_xright,plot_ytop,plot_ybottom, &
+                & txt_scale*p% grid_subplot_text_scale)
             case ('Box_with_Legend')
                 call do_box_with_legend(p, &
-                &   plot_xleft,plot_xright,plot_ytop,plot_ybottom,txt_scale)
+                &   plot_xleft,plot_xright,plot_ytop,plot_ybottom, &
+                & txt_scale*p% grid_subplot_text_scale)
             case default
                 write(error_unit,*) 'did not recognize plot name'
             end select
@@ -249,7 +253,7 @@ contains
         ! locate the legend
         lr = vr
         ll = vl + p% lgdplt_legend_left_edge*(vr-vl)
-        lt = vb + p% lgdplt_legend_top*(vt-vb)
+        lt = vb + p% lgdplt_legend_top_edge*(vt-vb)
         lb = vb
  
         call pgsvp(ll,lr,lb,lt)
@@ -315,7 +319,7 @@ contains
         ! locate the legend
         lr = vr
         ll = vl + p% lgdplt_legend_left_edge*(vr-vl)
-        lt = vb + p% lgdplt_legend_top*(vt-vb)
+        lt = vb + p% lgdplt_legend_top_edge*(vt-vb)
         lb = vb
 
         call pgsvp(ll,lr,lb,lt)

@@ -29,6 +29,7 @@ module pg_io
         grid_right_margin, &
         grid_top_margin, &
         grid_bottom_margin, &
+        grid_subplot_text_scale, &
         simplt_left_margin, &
         simplt_right_margin, &
         simplt_top_margin, &
@@ -51,7 +52,7 @@ module pg_io
         lgdplt_plot_right_edge, &
         lgdplt_legend_left_edge, &
         lgdplt_legend_txt_scale, &
-        lgdplt_legend_top, &
+        lgdplt_legend_top_edge, &
         lgdplt_legend_left_margin_in_em, &
         lgdplt_legend_top_margin_in_em, &
         lgdplt_legend_lineskip_in_em, &
@@ -130,6 +131,7 @@ module pg_io
                 p% grid_right_margin = grid_right_margin
                 p% grid_top_margin = grid_top_margin
                 p% grid_bottom_margin = grid_bottom_margin
+                p% grid_subplot_text_scale = grid_subplot_text_scale
                 p% simplt_left_margin = simplt_left_margin
                 p% simplt_right_margin = simplt_right_margin
                 p% simplt_top_margin = simplt_top_margin
@@ -152,11 +154,14 @@ module pg_io
                 p% lgdplt_plot_right_edge = lgdplt_plot_right_edge
                 p% lgdplt_legend_left_edge = lgdplt_legend_left_edge
                 p% lgdplt_legend_txt_scale = lgdplt_legend_txt_scale
-                p% lgdplt_legend_top = lgdplt_legend_top
-                p% lgdplt_legend_left_margin_in_em = lgdplt_legend_left_margin_in_em
-                p% lgdplt_legend_top_margin_in_em = lgdplt_legend_top_margin_in_em
+                p% lgdplt_legend_top_edge = lgdplt_legend_top_edge
+                p% lgdplt_legend_left_margin_in_em = &
+                &  lgdplt_legend_left_margin_in_em
+                p% lgdplt_legend_top_margin_in_em = &
+                &  lgdplt_legend_top_margin_in_em
                 p% lgdplt_legend_lineskip_in_em = lgdplt_legend_lineskip_in_em
-                p% lgdplt_legend_line_length_in_em = lgdplt_legend_line_length_in_em
+                p% lgdplt_legend_line_length_in_em =  &
+                &  lgdplt_legend_line_length_in_em
                 p% lgdplt_show_margin_box = lgdplt_show_margin_box
             
         end subroutine store_pggrid_controls

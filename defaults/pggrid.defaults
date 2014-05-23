@@ -22,6 +22,7 @@
     grid_right_margin = 0.02
     grid_top_margin = 0.02
     grid_bottom_margin = 0.02
+    grid_subplot_text_scale = 0.85
     simplt_left_margin = 0.02
     simplt_right_margin = 0.02   
     simplt_top_margin = 0.02
@@ -44,7 +45,7 @@
     lgdplt_plot_right_edge = 0.85
     lgdplt_legend_left_edge = 0.85
     lgdplt_legend_txt_scale = 1.0
-    lgdplt_legend_top = 1.0
+    lgdplt_legend_top_edge = 1.0
     lgdplt_legend_left_margin_in_em = 1.0
     lgdplt_legend_top_margin_in_em = 0.5
     lgdplt_legend_lineskip_in_em = 1.2
