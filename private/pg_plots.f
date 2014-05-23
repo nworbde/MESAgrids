@@ -259,6 +259,16 @@ contains
         call pgsvp(ll,lr,lb,lt)
         ! match world coordinates to normalized locations of patch
         call pgswin(ll,lr,lb,lt)
+        
+        if (p% lgdplt_show_margin_box) then
+            call pgqci(ci)
+            ci = ci+1
+            call pgsci(ci)
+            call pgbox('BC',0.0,0,'BC',0.0,0)
+            ci = ci-1
+            call pgsci(ci)
+        end if
+        
         ! apply legend text scaling
         call pgqch(text_scale)
         call pgsch(p% lgdplt_legend_txt_scale*text_scale)
