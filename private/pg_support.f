@@ -7,8 +7,7 @@ contains
     subroutine pg_clear(p)
         type(pg_data), pointer :: p
         if (have_initialized_pg) return
-        p% id_win = 0
-        p% id_file = 0
+        p% device_id = 0
     end subroutine pg_clear
     
     subroutine do_open(p, ierr)
@@ -25,9 +24,11 @@ contains
             name = trim(name) // '/' // trim(p% file_device)
             call open_device(p,.TRUE.,name, ierr)
             if (failed(name)) return
+            p% is_file = .TRUE.
         else
             call open_device(p,.FALSE.,'/xwin',ierr)
             if (failed('/xwin')) return
+            p% is_file = .FALSE.
         end if
         
         have_initialized_pg = .TRUE.
