@@ -36,6 +36,10 @@ program boxes
     p% lgdplt_legend_line_length_in_em = 2.0
     
     call make_pggrid_plot('Box_with_Legend',ierr)
+    if (ierr /= 0) then
+        write (error_unit,*) 'failure making Box_with_Legend'
+        stop
+    end if
     
     ! now make the simple plot, same margins, but with 4 em padding
     p% file_prefix = 'long_box_with_legend_plot'
@@ -46,5 +50,8 @@ program boxes
     p% lgdplt_show_margin_box = .TRUE.
     
     call make_pggrid_plot('Legend_Plot',ierr)
-    
+    if (ierr /= 0) then
+        write(error_unit,*) 'failure making Legend_Plot'
+        stop
+    end if
 end program boxes

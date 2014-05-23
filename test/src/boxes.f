@@ -28,6 +28,10 @@ program boxes
     p% simplt_pad_bottom_in_em = 0
     
     call make_pggrid_plot('Box',ierr)
+    if (ierr /= 0) then
+        write(error_unit,*) 'failure making box'
+        stop
+    end if
     
     ! now make the simple plot, same margins, but with 4 em padding
     p% file_prefix = 'box_with_simple_plot'
@@ -38,5 +42,8 @@ program boxes
     p% simplt_show_margin_box = .TRUE.
     
     call make_pggrid_plot('Simple_Plot',ierr)
-    
+    if (ierr /= 0) then
+        write(error_unit,*) 'failure makeing box_with_simple_plot'
+        stop
+    end if
 end program boxes

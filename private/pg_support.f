@@ -16,19 +16,18 @@ contains
         character(len=256) :: name
         
         ierr = 0
-        
         if (p% file_flag) then
+            p% is_file = .TRUE.
             call create_file_name(p% file_dir, p% file_prefix,  &
             &   p% file_extension, name)
             write (*,*) trim(name)
             name = trim(name) // '/' // trim(p% file_device)
-            call open_device(p,.TRUE.,name, ierr)
+            call open_device(p,name, ierr)
             if (failed(name)) return
-            p% is_file = .TRUE.
         else
-            call open_device(p,.FALSE.,'/xwin',ierr)
-            if (failed('/xwin')) return
             p% is_file = .FALSE.
+            call open_device(p,'/xwin',ierr)
+            if (failed('/xwin')) return
         end if
         
         have_initialized_pg = .TRUE.
@@ -60,15 +59,15 @@ contains
         name = trim(name) // '.' // trim(extension)
     end subroutine create_file_name
 
-    subroutine open_device(p, is_file, dev,ierr)
+    subroutine open_device(p,dev,ierr)
         use, intrinsic :: iso_fortran_env, only : error_unit
         type(pg_data), pointer :: p
-        logical, intent(in) :: is_file
         character(len=*), intent(in) :: dev
         integer, intent(out) :: ierr
         real :: width, ratio
         integer :: pgopen
 
+        ierr = 0
         p% device_id = pgopen(trim(dev))
         if (p% device_id <= 0) then
             write(error_unit,*) 'PGPLOT failed to open '//trim(dev)
@@ -76,7 +75,7 @@ contains
             return
         end if
 
-        if (is_file) then
+        if (p% is_file) then
             width = p% file_width; if (width < 0) width = p% win_width
             ratio = p% file_aspect_ratio; if (ratio < 0)  &
             &   ratio = p% win_aspect_ratio
