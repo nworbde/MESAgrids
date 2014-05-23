@@ -78,6 +78,7 @@ module pg_io
             end if
             read(iounit,nml=pggrid,iostat=ierr)
             if (failure('reading from '//trim(filename))) then
+                close(iounit)
                 open(unit=iounit,file=trim(filename), action='read',  &
                 &   delim='quote',status='old',iostat=ierr)
                 read(iounit,nml=pggrid)
