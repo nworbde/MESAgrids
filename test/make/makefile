@@ -4,7 +4,7 @@ LIB_NAME = pggrid
 LIB_FILENAME = lib$(LIB_NAME).a
 
 LOAD_LOCAL = -L$(LOCAL_LIB_DIR) -l$(LIB_NAME)
-LOAD_OTHER = $(LOAD_PGPLOT) -L$(MESA_LIB_DIR) -lutils
+LOAD_OTHER = -L$(MESA_LIB_DIR) -lutils $(LOAD_PGPLOT)
 
 TESTER = run_test
 TEST_OBJS = run_test.o

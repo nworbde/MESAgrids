@@ -1,5 +1,5 @@
 &pggrid
-    file_flag = .FALSE.
+    file_flag = .TRUE.
     file_dir = '.'
     file_prefix = 'grid1'
     file_device = 'png'

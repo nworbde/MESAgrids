@@ -33,21 +33,20 @@ contains
         have_initialized_pg = .TRUE.
     contains
         function failed(str)
-            use, intrinsic:: iso_fortran_env, only: error_unit
-           character (len=*), intent(in) :: str
-           logical :: failed
+!             use, intrinsic:: iso_fortran_env, only: error_unit
+            character (len=*), intent(in) :: str
+            logical :: failed
            
-           failed = (ierr /= 0)
-           if (failed) then
-              write(*, *) 'failure opening device '//trim(str) // ': ierr = ', &
-              & ierr
-           end if
+            failed = (ierr /= 0)
+            if (failed) then
+                write(*, *) 'failure opening device '//trim(str)//': ierr = ', &
+              &     ierr
+            end if
         end function failed
         
     end subroutine do_open
 
     subroutine create_file_name(dir, prefix, extension, name)
-        use, intrinsic :: iso_fortran_env, only : error_unit
         character(len=*), intent(in) :: dir, prefix, extension
         character(len=*), intent(out) :: name
         
@@ -60,7 +59,7 @@ contains
     end subroutine create_file_name
 
     subroutine open_device(p,dev,ierr)
-        use, intrinsic :: iso_fortran_env, only : error_unit
+!         use, intrinsic :: iso_fortran_env, only : error_unit
         type(pg_data), pointer :: p
         character(len=*), intent(in) :: dev
         integer, intent(out) :: ierr
@@ -70,7 +69,7 @@ contains
         ierr = 0
         p% device_id = pgopen(trim(dev))
         if (p% device_id <= 0) then
-            write(error_unit,*) 'PGPLOT failed to open '//trim(dev)
+            write(*,*) 'PGPLOT failed to open '//trim(dev)
             ierr = -1
             return
         end if
