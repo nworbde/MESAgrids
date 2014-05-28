@@ -21,10 +21,3 @@ Installation
 2.  Run `./build_and_test`; the output is in `test/test_grid.png`.
 3.  Look at doc/about_grid.html for a description of the controls.
 4.  To generate the images in the documentation, `cd test; ./rn`
-
-TODO
----
-
-1.  Primitive routines take xleft, xright, ytop, ybottom (norm. coord.) and a text size (px).  Locate viewport by applying margins (in fractional size of plotting area) and then applying padding (in em).
-
-2.  Legend specified by left-side and top-side.  Lines, text located relative to this with topskip, left_margin (in em).

@@ -5,6 +5,15 @@ module pg_plots
     integer, parameter :: return_size_in_px = 3
     
 contains
+    subroutine grid_plot(p)
+        type(pg_data), pointer :: p
+        
+        call pgbbuf()
+        call pgeras()
+        call do_grid(p,0.0,1.0,1.0,0.0,1.0)
+        call pgebuf()
+    end subroutine grid_plot
+    
     subroutine do_grid(p,xleft,xright,ytop,ybottom,txt_scale)
         use, intrinsic :: iso_fortran_env, only: error_unit
         type(pg_data), pointer :: p
@@ -89,6 +98,15 @@ contains
 
     end subroutine do_grid
     
+    subroutine simplt_plot(p)
+        type(pg_data), pointer :: p
+        
+        call pgbbuf()
+        call pgeras()
+        call do_simplt(p,0.0,1.0,1.0,0.0,1.0)
+        call pgebuf()        
+    end subroutine simplt_plot
+    
     subroutine do_simplt(p,xleft,xright,ytop,ybottom,txt_scale)
         type(pg_data), pointer :: p
         real, intent(in) :: xleft, xright, ytop, ybottom,txt_scale
@@ -143,6 +161,15 @@ contains
         call pgline(100,xs,ys)
         
     end subroutine do_simplt
+    
+    subroutine box_plot(p)
+        type(pg_data), pointer :: p
+        
+        call pgbbuf()
+        call pgeras()
+        call do_box(p,0.0,1.0,1.0,0.0,1.0)
+        call pgebuf()        
+    end subroutine box_plot
 
     subroutine do_box(p,xleft,xright,ytop,ybottom,txt_scale)
         type(pg_data), pointer :: p
@@ -174,6 +201,15 @@ contains
         call pgbox('BC',0.0,0,'BC',0.0,0)
         
     end subroutine do_box
+    
+    subroutine lgdplt_plot(p)
+        type(pg_data), pointer :: p
+        
+        call pgbbuf()
+        call pgeras()
+        call do_lgdplt(p,0.0,1.0,1.0,0.0,1.0)
+        call pgebuf()        
+    end subroutine lgdplt_plot
 
     subroutine do_lgdplt(p,xleft,xright,ytop,ybottom,txt_scale)
         type(pg_data), pointer :: p
@@ -292,6 +328,15 @@ contains
         
         call pgsci(save_ci)
     end subroutine do_lgdplt
+    
+    subroutine box_with_legend_plot(p)
+        type(pg_data), pointer :: p
+        
+        call pgbbuf()
+        call pgeras()
+        call do_box_with_legend(p,0.0,1.0,1.0,0.0,1.0)
+        call pgebuf()        
+    end subroutine box_with_legend_plot
     
     subroutine do_box_with_legend(p,xleft,xright,ytop,ybottom,txt_scale)
         type(pg_data), pointer :: p

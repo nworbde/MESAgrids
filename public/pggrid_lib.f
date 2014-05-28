@@ -26,19 +26,17 @@ contains
         call do_open(p, ierr)
         if (ierr /= 0) return
         
-!         call print_pggrid_controls(p)
-        
         select case(which_plot)
         case('Grid_Plot')
-            call do_grid(p,0.0,1.0,1.0,0.0,1.0)
+            call grid_plot(p)
         case('Legend_Plot')
-            call do_lgdplt(p,0.0,1.0,1.0,0.0,1.0)
+            call lgdplt_plot(p)
         case('Simple_Plot')
-            call do_simplt(p,0.0,1.0,1.0,0.0,1.0)
+            call simplt_plot(p)
         case('Box')
-            call do_box(p,0.0,1.0,1.0,0.0,1.0)
+            call box_plot(p)
         case('Box_with_Legend')
-            call do_box_with_legend(p,0.0,1.0,1.0,0.0,1.0)
+            call box_with_legend_plot(p)
         case default
             write(error_unit,*) 'make_pggrid_plot: did not recognize plot_name'
         end select

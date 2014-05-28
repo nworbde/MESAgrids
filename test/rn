@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
+echo "making simple plot to show layout"
+./show_layout
+echo "making a plot with legend to show layout"
+./show_legend_layout
+echo
 echo "doing the grid layout plots"
 for inlist in grid*.inlist; do
      echo "   running $inlist..."
      ./run_test $inlist
-done
-
-echo "doing the example plots"
-for inlist in plt*.inlist; do
-    echo "   running $inlist..."
-    ./run_test $inlist
 done
