@@ -61,32 +61,25 @@ module pg_io
     contains
         
         subroutine read_pggrid_controls(filename,ierr)
-            use utils_lib
             character(len=*), intent(in) :: filename
             integer, intent(out) :: ierr
             integer :: iounit
             
             ierr = 0
             call set_default_pggrid_controls
-            iounit = alloc_iounit(ierr); if (ierr /= 0) return
-            open(unit=iounit,file=trim(filename), action='read',  &
+            open(newunit=iounit,file=trim(filename), action='read',  &
             &   delim='quote',status='old',iostat=ierr)
-            if (failure('opening '//trim(filename))) then
-                call free_iounit(iounit)
-                return
-            end if
+            if (failure('opening '//trim(filename))) return
             read(iounit,nml=pggrid,iostat=ierr)
             if (failure('reading from '//trim(filename))) then
                 close(iounit)
-                open(unit=iounit,file=trim(filename), action='read',  &
+                open(newunit=iounit,file=trim(filename), action='read',  &
                 &   delim='quote',status='old',iostat=ierr)
                 read(iounit,nml=pggrid)
                 close(iounit)
-                call free_iounit(iounit)
                 return
             end if
             close(iounit)
-            call free_iounit(iounit)
             call store_pggrid_controls
             
         contains

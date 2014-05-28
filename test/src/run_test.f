@@ -19,7 +19,7 @@ program run_test
     if (failed('load_pggrid_controls')) stop
     call make_pggrid_plot('Grid_Plot',ierr)
     if (failed('make_pggrid_plot')) stop
-    
+
 contains
     subroutine show_help()
         use, intrinsic :: iso_fortran_env, only: error_unit
