@@ -26,7 +26,7 @@ contains
         call do_open(p, ierr)
         if (ierr /= 0) return
         
-        call print_pggrid_controls(p)
+!         call print_pggrid_controls(p)
         
         select case(which_plot)
         case('Grid_Plot')
